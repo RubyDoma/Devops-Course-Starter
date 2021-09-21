@@ -2,17 +2,55 @@
 {% block title %}To-Do App{% endblock %}
 
 {% block content %}
+<head>
+  <link rel="stylesheet" type="text/css" href="main.css">
+  </head>
   <div class="jumbotron">
     <h1 class="display-4">To-Do App</h1>
     <p class="lead">Just another to-do app.</p>
   </div>
+ 
 
   <div class="row">
     <div class="col-md-12">
       <h2>Items</h2>
       <ul class="list-group mb-4">
         <!-- List the todo items here -->
+
+        {% for i in get_items() %}
+        <br>{{ i[title] }}</br>
+       {% endfor %}
+
+
+
+        <!-- {{get_items()[0][title]}} -->
+        
+        
       </ul>
-    </div>
+      <div class="container-fluid">
+      <form action="http://127.0.0.1:5000/add/add_item", method="POST" class="form-example">
+        <div class="form-example">
+          <label for="name">Add item: </label>
+          <input type="text" name="item_name" id="item_id" class=f-form-control required>
+        <div class="form-example">
+          <button type="button" class="btn btn-primary btn-lg btn-block">Submit</button>
+        </div>
+        </div>
+      </form>
+
+      <br>
+
+      <form action="http://127.0.0.1:5000/remove/", method="POST" class="form-example">
+        <div class="form-example">
+          <label for="name">Remove item: </label>
+          <input type="text" name="item_name" id="item_id" class=f-form-control required>
+        <div class="form-example">
+          <button type="button" class="btn btn-primary btn-lg btn-block">Submit</button>
+        </div>
+      </form>
+        </div>
+
+        </div>
+       
   </div>
 {% endblock %}

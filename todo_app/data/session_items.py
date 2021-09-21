@@ -67,3 +67,20 @@ def save_item(item):
     session['items'] = updated_items
 
     return item
+
+def remove_item(title):
+    
+    items = get_items()
+
+    item = { 'id': id, 'title': title, 'status': 'Not Started' }
+
+    for item in items:
+  
+        if item['title'] == title:
+            
+        
+            items.remove(item)
+            session['items'] = items
+
+
+    return item
