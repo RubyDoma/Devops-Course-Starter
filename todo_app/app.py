@@ -11,6 +11,7 @@ app.config.from_object(Config)
 @app.route('/', methods=['POST', 'GET'])
 def index():
     get_items()
+    #get_item(0)['status'] = 'Completed'
     return render_template('index.html', get_items=get_items, title='title')
 
 
@@ -18,6 +19,7 @@ def index():
 def add_to_do():
     if request.method == 'POST':
         add_item(title=request.form.get('item_name'))
+        
         return redirect(url_for('index'))
 
 @app.route('/remove/', methods=['POST', 'GET'])

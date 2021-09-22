@@ -2,26 +2,23 @@
 {% block title %}To-Do App{% endblock %}
 
 {% block content %}
-<head>
-  <link rel="stylesheet" type="text/css" href="main.css">
-  </head>
-  <div class="jumbotron">
-    <h1 class="display-4">To-Do App</h1>
-    <p class="lead">Just another to-do app.</p>
+<div class="p-3 mb-2 bg-dark text-white">
+  <div class="p-3 mb-2 bg-info text-white">
+    <h1 class="display-4">2Doo!</h1>
+    <p class="text-light" class="lead">Plan, manage and track all your tasks in one flexible app!</p>
   </div>
  
 
   <div class="row">
     <div class="col-md-12">
-      <h2>Items</h2>
+      <h2>To-do:</h2>
       <ul class="list-group mb-4">
         <!-- List the todo items here -->
 
         {% for i in get_items() %}
-        <br>{{ i[title] }}</br>
+        <br>{{i[title]}} </br>
+      
        {% endfor %}
-
-
 
         <!-- {{get_items()[0][title]}} -->
         
@@ -30,10 +27,10 @@
       <div class="container-fluid">
       <form action="http://127.0.0.1:5000/add/add_item", method="POST" class="form-example">
         <div class="form-example">
-          <label for="name">Add item: </label>
-          <input type="text" name="item_name" id="item_id" class=f-form-control required>
+          <!-- <label for="name"></label> -->
+          <input type="text" class="col-lg-4 col-lg-offset-10" name="item_name" id="item_id" class=f-form-control required>
         <div class="form-example">
-          <button type="button" class="btn btn-primary btn-lg btn-block">Submit</button>
+          <button type="button" class="btn btn-info btn-lg btn-block">ADD ITEM</button>
         </div>
         </div>
       </form>
@@ -42,10 +39,10 @@
 
       <form action="http://127.0.0.1:5000/remove/", method="POST" class="form-example">
         <div class="form-example">
-          <label for="name">Remove item: </label>
-          <input type="text" name="item_name" id="item_id" class=f-form-control required>
+          <!-- <label for="name"> </label> -->
+          <input type="text" class="col-lg-4 col-lg-offset-10" name="item_name" id="item_id" class=f-form-control required>
         <div class="form-example">
-          <button type="button" class="btn btn-primary btn-lg btn-block">Submit</button>
+          <button type="button" class="btn btn-info btn-lg btn-block">REMOVE ITEM</button>
         </div>
       </form>
         </div>
@@ -53,4 +50,7 @@
         </div>
        
   </div>
+</div>
+<div class="p-3 mb-2 bg-dark text-white"></div>
+</div>
 {% endblock %}
