@@ -3,6 +3,7 @@
 
 {% block content %}
 <div class="p-3 mb-2 bg-dark text-white">
+
   <div class="p-3 mb-2 bg-info text-white">
     <h1 class="display-4">2Doo!</h1>
     <p class="text-light" class="lead">Plan, manage and track all your tasks in one flexible app!</p>
@@ -14,43 +15,65 @@
       <h2>To-do:</h2>
       <ul class="list-group mb-4">
         <!-- List the todo items here -->
+        <tbody>
 
-        {% for i in get_items() %}
-        <br>{{i[title]}} </br>
+
+          {% for item in get_items() %}
+          <td>{{item.id}}</td>
+          <td>{{item.title}}</td>
+          <td>{{item.status}}</td>
+
+          {% if item.status == "Not Started" %}
+          
+        <div align ="right">
+          
+        <form class="form" method="POST" action="http://127.0.0.1:5000/remove/{{item.id}}">
+          <input type="hidden" name="remove" value="{{item}}" class=f-form-control>
+          <button type="submit" class="btn btn-danger" name="remove" value="{{item}}">REMOVE</button>
+         
+        
+       
+        </form>
+          
+        <form action="http://127.0.0.1:5000/mark_complete", method="POST" class="form-example">
+        <input type="submit" class="btn btn-success" value="COMPLETE">
+        </form>
+          
+        </div>
+        {%endif%}
+
+          {% if item.status == "Completed" %}
+        <div align ="left">
+        <td><p class="text-success">Done</p></td> 
+        </div>
+          
+          {%endif%}
+
+
       
-       {% endfor %}
+      {% endfor %}  
 
-        <!-- {{get_items()[0][title]}} -->
-        
-        
-      </ul>
+      </tbody>
+    </ul>
+
       <div class="container-fluid">
       <form action="http://127.0.0.1:5000/add/add_item", method="POST" class="form-example">
         <div class="form-example">
-          <!-- <label for="name"></label> -->
+          <div align ="center">
+          <p>----------------------- To-Do ----------------------- </p>
           <input type="text" class="col-lg-4 col-lg-offset-10" name="item_name" id="item_id" class=f-form-control required>
-        <div class="form-example">
-          <button type="button" class="btn btn-info btn-lg btn-block">ADD ITEM</button>
+        </form>
+          </div>
         </div>
-        </div>
-      </form>
+      </div>
 
       <br>
 
-      <form action="http://127.0.0.1:5000/remove/", method="POST" class="form-example">
-        <div class="form-example">
-          <!-- <label for="name"> </label> -->
-          <input type="text" class="col-lg-4 col-lg-offset-10" name="item_name" id="item_id" class=f-form-control required>
-        <div class="form-example">
-          <button type="button" class="btn btn-info btn-lg btn-block">REMOVE ITEM</button>
-        </div>
-      </form>
-        </div>
-
-        </div>
+      
        
   </div>
 </div>
-<div class="p-3 mb-2 bg-dark text-white"></div>
-</div>
+
+<!-- <div class="p-3 mb-2 bg-dark text-white"></div>
+</div> -->
 {% endblock %}
