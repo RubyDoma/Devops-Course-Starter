@@ -27,16 +27,13 @@
           
         <div align ="right">
           
-        <form class="form" method="POST" action="http://127.0.0.1:5000/remove/{{item.id}}">
-          <input type="hidden" name="remove" value="{{item}}" class=f-form-control>
-          <button type="submit" class="btn btn-danger" name="remove" value="{{item}}">REMOVE</button>
-         
-        
-       
+        <form class="form" method="POST" action="http://127.0.0.1:5000/remove/{{item}}">
+          <input type="submit" name="remove" class="btn btn-danger" value="REMOVE">
+          
         </form>
           
-        <form action="http://127.0.0.1:5000/mark_complete", method="POST" class="form-example">
-        <input type="submit" class="btn btn-success" value="COMPLETE">
+        <form class="form" method="POST" action="http://127.0.0.1:5000//mark_complete">
+          <input type="submit" name="complete" class="btn btn-success" value="COMPLETE" data-source="{{item.id}}">
         </form>
           
         </div>

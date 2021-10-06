@@ -21,24 +21,24 @@ def add_to_do():
         add_item(title=request.form.get('item_name'))
         return redirect(url_for('index'))
 
-@app.route('/remove/<item_id>', methods=['POST', 'GET'])
-def remove_to_do(item_id):
-    get_item(id=int(item_id))
-    # items = get_items()
-    # for i in items:
-    if request.method == 'POST' and request.form['remove'] == 'item':
-        remove_item(item=item_id)
-    return redirect(url_for('index'))
+@app.route('/remove/<item>', methods=['POST', 'GET'])
+def remove_to_do(item):
+    items = get_items()
+    for item in items:
+        if request.method == 'POST':
+            remove_item(item=item)
+            return redirect(url_for('index'))
             
 
 @app.route('/mark_complete', methods=['POST', 'GET'])
 def mark_as_complete():
     items = get_items()
     for i in items:
-        if request.method == 'POST': 
+        if request.method == 'POST':
             i["status"] = "Completed"
             save_item(item=i)
-            return redirect(url_for('index'))
+        return redirect(url_for('index'))
+
 
 
 if __name__ == '__main__':

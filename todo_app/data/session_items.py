@@ -71,13 +71,15 @@ def save_item(item):
 def remove_item(item):
 
 
-    items = get_items()
+    # items = get_items()
 
+    # for item in items:
 
+    if item in get_items():
 
-    items.remove(item)
-    session['items'] = items
+        get_items().remove(item)
+        session['items'] = get_items()
 
-    return item
+    return get_items()
     
     
