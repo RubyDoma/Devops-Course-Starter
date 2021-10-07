@@ -19,25 +19,33 @@
 
 
           {% for item in get_items() %}
-          <td>{{item.id}}</td>
-          <td>{{item.title}}</td>
-          <td>{{item.status}}</td>
+          <li>
+          {{item.id}}
+          {{item.title}}
+          {{item.status}}
 
           {% if item.status == "Not Started" %}
           
-        <div align ="right">
+        
+       
           
-        <form class="form" method="POST" action="http://127.0.0.1:5000/remove/{{item}}">
+          
+          
+        <form class="form d-inline w-25 float-right" method="POST" action="http://127.0.0.1:5000/remove/{{item.id}}">
           <input type="submit" name="remove" class="btn btn-danger" value="REMOVE">
           
         </form>
           
-        <form class="form" method="POST" action="http://127.0.0.1:5000//mark_complete">
+        <form class="form d-inline w-25 float-right" method="POST" action="http://127.0.0.1:5000//mark_complete/{{item.id}}">
           <input type="submit" name="complete" class="btn btn-success" value="COMPLETE" data-source="{{item.id}}">
         </form>
           
-        </div>
+        
+        
+      
+      
         {%endif%}
+        
 
           {% if item.status == "Completed" %}
         <div align ="left">
@@ -45,7 +53,7 @@
         </div>
           
           {%endif%}
-
+          </li>
 
       
       {% endfor %}  
