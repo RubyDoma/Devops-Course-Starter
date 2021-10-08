@@ -20,27 +20,27 @@
 
           {% for item in get_items() %}
           <li>
-          {{item.id}}
+          
           {{item.title}}
-          {{item.status}}
+          
+        
 
           {% if item.status == "Not Started" %}
           
         
-       
-          
-          
-          
-        <form class="form d-inline w-25 float-right" method="POST" action="http://127.0.0.1:5000/remove/{{item.id}}">
+        <form class="form d-inline float-right" method="POST" action="http://127.0.0.1:5000/remove/{{item.id}}">
           <input type="submit" name="remove" class="btn btn-danger" value="REMOVE">
           
         </form>
           
-        <form class="form d-inline w-25 float-right" method="POST" action="http://127.0.0.1:5000//mark_complete/{{item.id}}">
+        <form class="form d-inline float-right" method="POST" action="http://127.0.0.1:5000//mark_complete/{{item.id}}">
           <input type="submit" name="complete" class="btn btn-success" value="COMPLETE" data-source="{{item.id}}">
         </form>
           
-        
+        <div align ="left">
+          <p class="text-danger">To Do</p>
+          
+          </div>
         
       
       
@@ -48,8 +48,13 @@
         
 
           {% if item.status == "Completed" %}
+          <form class="form d-inline float-right" method="POST" action="http://127.0.0.1:5000/remove/{{item.id}}">
+            <input type="submit" name="remove" class="btn btn-danger" value="REMOVE">
+            
+          </form>
         <div align ="left">
-        <td><p class="text-success">Done</p></td> 
+        <p class="text-success">Done</p>
+        
         </div>
           
           {%endif%}
@@ -67,7 +72,10 @@
           <div align ="center">
           <p>----------------------- To-Do ----------------------- </p>
           <input type="text" class="col-lg-4 col-lg-offset-10" name="item_name" id="item_id" class=f-form-control required>
+          <br>
+          <input type="submit" name="add" class="btn btn-info" value="ADD">
         </form>
+        
           </div>
         </div>
       </div>

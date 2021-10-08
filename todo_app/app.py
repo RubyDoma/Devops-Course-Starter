@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template, redirect, url_for
-from todo_app.data.session_items import get_item, get_items, add_item, remove_item, save_item
+from todo_app.data.session_items import get_items, add_item, remove_item, save_item
 
 
 from todo_app.flask_config import Config
@@ -10,9 +10,9 @@ app.config.from_object(Config)
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
-    get_items()
-    # sort by status
-    return render_template('index.html', get_items=get_items, title='title')
+    items = get_items()
+    #sorted(items, key = lambda item: item['status'], reverse=True)
+    return render_template('index.html', get_items=get_items, items=items, title='title')
 
 
 @app.route('/add/add_item', methods=['POST', 'GET'])
@@ -37,6 +37,7 @@ def mark_as_complete(item_id):
         if item['id'] == int(item_id):
             item["status"] = "Completed"
             save_item(item=item)
+            sorted(item.keys())
     return redirect(url_for('index'))
 
 
