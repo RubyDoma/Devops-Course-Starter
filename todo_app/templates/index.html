@@ -12,7 +12,7 @@
 
   <div class="row">
     <div class="col-md-12">
-      <h2>To-do:</h2>
+      <h2 >To-do:</h2>
       <ul class="list-group mb-4">
         <!-- List the todo items here -->
         <tbody>
@@ -29,13 +29,15 @@
           
         
         <form class="form d-inline float-right" method="POST" action="http://127.0.0.1:5000/remove/{{item.id}}">
-          <input type="submit" name="remove" class="btn btn-danger" value="REMOVE">
+          <input type="submit"  name="remove" class="btn btn-secondary" value="🗑️">
           
         </form>
           
         <form class="form d-inline float-right" method="POST" action="http://127.0.0.1:5000//mark_complete/{{item.id}}">
-          <input type="submit" name="complete" class="btn btn-success" value="COMPLETE" data-source="{{item.id}}">
+          <input type="submit" name="complete" class="btn btn-success" value="✔️" data-source="{{item.id}}">
         </form>
+
+      
           
         <div align ="left">
           <p class="text-danger">To Do</p>
@@ -49,11 +51,13 @@
 
           {% if item.status == "Completed" %}
           <form class="form d-inline float-right" method="POST" action="http://127.0.0.1:5000/remove/{{item.id}}">
-            <input type="submit" name="remove" class="btn btn-danger" value="REMOVE">
-            
+            <input type="submit" name="remove" class="btn btn-secondary" value="🗑️">
           </form>
-        <div align ="left">
-        <p class="text-success">Done</p>
+          <form class="form d-inline float-right" method="POST" action="http://127.0.0.1:5000//mark_to_do/{{item.id}}">
+            <input type="submit" name="to_do" class="btn btn-success" value="❌" data-source="{{item.id}}">
+          </form>
+          <div align ="left">
+        <p class="text-success">✔️</p>
         
         </div>
           
