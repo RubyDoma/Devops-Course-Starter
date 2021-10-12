@@ -59,7 +59,7 @@
   --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
   --bs-body-font-family: var(--bs-font-sans-serif);
-  --bs-body-font-size: 1rem;
+  --bs-body-font-size: 5rem;
   --bs-body-font-weight: 700;
   --bs-body-line-height: 1.5;
   --bs-body-color: #212529;
@@ -705,11 +705,20 @@ progress {
 .row > * {
   -ms-flex-negative: 0;
   flex-shrink: 0;
-  width: 100%;
-  max-width: 100%;
+  width: 60%;
+  max-width: 60%;
   padding-right: calc(var(--bs-gutter-x) * .5);
   padding-left: calc(var(--bs-gutter-x) * .5);
   margin-top: var(--bs-gutter-y);
+}
+
+
+.row {
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  width: 60%;
+  max-width: 60%;
+  padding-right: 5rem;
 }
 
 .col {
@@ -1235,7 +1244,6 @@ progress {
   .col-md-12 {
     -ms-flex: 0 0 auto;
     flex: 0 0 auto;
-    width: 100%;
   }
   .offset-md-0 {
     margin-left: 0;
@@ -2106,6 +2114,7 @@ progress {
   }
 }
 
+
 .form-label {
   margin-bottom: 0.5rem;
 }
@@ -2134,6 +2143,10 @@ progress {
   margin-top: 0.25rem;
   font-size: 0.875em;
   color: #868e96;
+}
+
+form {
+text-align: right;
 }
 
 .form-control {
@@ -4928,7 +4941,7 @@ fieldset:disabled .btn {
 .card-header {
   padding: 0.5rem 1rem;
   margin-bottom: 0;
-  background-color: rgba(0, 0, 0, 0.03);
+  background-color: rgb(23, 162, 184);
   border-bottom: 2px solid #333;
 }
 
@@ -5193,7 +5206,7 @@ fieldset:disabled .btn {
 .pagination {
   display: -ms-flexbox;
   display: flex;
-  padding-left: 0;
+  padding-left: 5rem;
   list-style: none;
 }
 
@@ -5488,6 +5501,8 @@ fieldset:disabled .btn {
   padding-left: 0;
   margin-bottom: 0;
   border-radius: 25px;
+  text-align: center;
+  max-width: 60%;
 }
 
 .list-group-numbered {
@@ -5524,7 +5539,7 @@ fieldset:disabled .btn {
   padding: 0.5rem 1rem;
   color: #212529;
   text-decoration: none;
-  background-color: #fff;
+  background-color: rgb(23, 162, 184);
   border: 2px solid #333;
 }
 
@@ -8039,6 +8054,7 @@ fieldset:disabled .btn {
 
 .mb-4 {
   margin-bottom: 1.5rem !important;
+  text-align: center;
 }
 
 .mb-5 {
@@ -8091,6 +8107,7 @@ fieldset:disabled .btn {
 
 .p-3 {
   padding: 1rem !important;
+  margin: auto;
 }
 
 .p-4 {
@@ -11648,6 +11665,7 @@ select.form-control {
   border: 2px solid #333;
   border-radius: 45px 15px 35px 5px/15px 5px 15px 65px;
   overflow: hidden;
+  max-width: 60%;
 }
 
 .list-group-item {
