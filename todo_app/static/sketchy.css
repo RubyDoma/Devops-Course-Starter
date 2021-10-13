@@ -713,14 +713,6 @@ progress {
 }
 
 
-.row {
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
-  width: 60%;
-  max-width: 60%;
-  padding-right: 5rem;
-}
-
 .col {
   -ms-flex: 1 0 0%;
   flex: 1 0 0%;
@@ -2183,8 +2175,8 @@ text-align: right;
 
 .form-control:focus {
   color: #212529;
-  background-color: #fff;
-  border-color: #333;
+  background-color:#ab707e;
+  border-color: #ffb699;
   outline: 0;
   box-shadow: 0 0 0 0.25rem rgba(51, 51, 51, 0.25);
 }
@@ -2230,7 +2222,7 @@ text-align: right;
   -moz-margin-end: 0.75rem;
   margin-inline-end: 0.75rem;
   color: #212529;
-  background-color: #f7f7f9;
+  background-color: #ab707e;
   pointer-events: none;
   border-color: inherit;
   border-style: solid;
@@ -4941,7 +4933,7 @@ fieldset:disabled .btn {
 .card-header {
   padding: 0.5rem 1rem;
   margin-bottom: 0;
-  background-color: rgb(23, 162, 184);
+  background-color: #ed8a8a;
   border-bottom: 2px solid #333;
 }
 
@@ -5498,11 +5490,13 @@ fieldset:disabled .btn {
   display: flex;
   -ms-flex-direction: column;
   flex-direction: column;
+  background-color: transparent;
+  /* background-color: #6c757d; */
   padding-left: 0;
   margin-bottom: 0;
   border-radius: 25px;
-  text-align: center;
-  max-width: 60%;
+  text-align: left;
+  max-width: 100%;
 }
 
 .list-group-numbered {
@@ -5537,11 +5531,23 @@ fieldset:disabled .btn {
   position: relative;
   display: block;
   padding: 0.5rem 1rem;
-  color: #212529;
   text-decoration: none;
-  background-color: rgb(23, 162, 184);
+  background-color: #6c756d;
+  /* background-color: rgb(23, 162, 184); */
   border: 2px solid #333;
+  width: 100%;
 }
+
+.list-group-item2 {
+  position: relative;
+  display: block;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  background-color: #f88f81;
+  border: 2px solid #333;
+  width: 100%;
+}
+
 
 .list-group-item:first-child {
   border-top-left-radius: inherit;
@@ -11665,7 +11671,7 @@ select.form-control {
   border: 2px solid #333;
   border-radius: 45px 15px 35px 5px/15px 5px 15px 65px;
   overflow: hidden;
-  max-width: 60%;
+  max-width: 100%;
 }
 
 .list-group-item {
