@@ -3,99 +3,54 @@
 
 {% block content %}
 <div class="p-3 mb-2 bg-dark text-white">
-
-  <div class="header">
-    <h1 class="text-center" class="display-4">2Doo!</h1>
-    <h5 class="text-center" class="text-light" class="lead">Plan, manage and track all your tasks in one flexible app!</h5>
+  <div class="p-3 mb-2 bg-info text-white">
+    <h1 class="display-4">2Doo!</h1>
+    <p class="text-light" class="lead">Plan, manage and track all your tasks in one flexible app!</p>
   </div>
  
 
-  <!-- <div class="row"> -->
+  <div class="row">
     <div class="col-md-12">
-      <br>
-      <h2 class="text-center">Your To-do List:</h2>
-    
+      <h2>To-do:</h2>
+      <ul class="list-group mb-4">
+        <!-- List the todo items here -->
+
+        {% for i in get_items() %}
+        <br>{{i[title]}} </br>
       
-      <!-- List the todo items here -->
-      <tbody>
-        
-        
-        <ul class="list-group">
-        {% for item in get_items() %}
-          <li class="list-group-item">
-            <h5>
-          
-          {{item.title}}
-          
-        
+       {% endfor %}
 
-          {% if item.status == "Not Started" %}
-          
+        <!-- {{get_items()[0][title]}} -->
         
-        <form class="float-end" method="POST" action="http://127.0.0.1:5000/remove/{{item.id}}">
-          <input type="submit"  name="remove" class="btn-secondary" value="🗑️">
-          
-        </form>
-          
-        <form class="float-end" method="POST" action="http://127.0.0.1:5000//mark_complete/{{item.id}}">
-          <input type="submit" name="complete" class="btn-secondary" value="✔️" data-source="{{item.id}}">
-        </form>
-
-      
-          
-        <div align ="left">
-          <p class="text-danger">To Do</p>
-          
-          </div>
         
-      
-      
-        {%endif%}
-        
-
-          {% if item.status == "Completed" %}
-          <form class="float-end" method="POST" action="http://127.0.0.1:5000/remove/{{item.id}}">
-            <input type="submit" name="remove" class="btn-secondary" value="🗑️">
-          </form>
-          <form class="float-end" method="POST" action="http://127.0.0.1:5000//mark_to_do/{{item.id}}">
-            <input type="submit" name="to_do" class="btn-secondary" value="❌" data-source="{{item.id}}">
-          </form>
-          <div align ="left">
-        <p class="text-success">✔️</p>
-        
-        </div>
-          
-          {%endif%}
-          </h5>
-          </li>
-
-      
-      {% endfor %}  
-
-      </tbody>
-    </ul>
-
+      </ul>
       <div class="container-fluid">
-      <form action="http://127.0.0.1:5000/add/add_item", method="POST" class="form-control">
-        <div class=" class="form-control>
-          <div align ="center">
-          <h5>----------------------- To-Do ----------------------- </h5>
-          <input type="text" class="col-lg-4 col-lg-offset-10" name="item_name" id="item_id" class=form-control required>
-          <br>
-          <input type="submit" name="add" class="btn btn-info" value="ADD">
-        </form>
-        
-          </div>
+      <form action="http://127.0.0.1:5000/add/add_item", method="POST" class="form-example">
+        <div class="form-example">
+          <!-- <label for="name"></label> -->
+          <input type="text" class="col-lg-4 col-lg-offset-10" name="item_name" id="item_id" class=f-form-control required>
+        <div class="form-example">
+          <button type="button" class="btn btn-info btn-lg btn-block">ADD ITEM</button>
         </div>
-      </div>
+        </div>
+      </form>
 
       <br>
 
-      
+      <form action="http://127.0.0.1:5000/remove/", method="POST" class="form-example">
+        <div class="form-example">
+          <!-- <label for="name"> </label> -->
+          <input type="text" class="col-lg-4 col-lg-offset-10" name="item_name" id="item_id" class=f-form-control required>
+        <div class="form-example">
+          <button type="button" class="btn btn-info btn-lg btn-block">REMOVE ITEM</button>
+        </div>
+      </form>
+        </div>
+
+        </div>
        
   </div>
 </div>
-
-
-
+<div class="p-3 mb-2 bg-dark text-white"></div>
+</div>
 {% endblock %}
