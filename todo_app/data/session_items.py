@@ -1,8 +1,8 @@
-from flask import session
+from flask import session, request
 
 _DEFAULT_ITEMS = [
     { 'id': 1, 'status': 'Not Started', 'title': 'List saved todo items' },
-    { 'id': 2, 'status': 'Not Started', 'title': 'Allow new items to be added' }
+    { 'id': 2, 'status': 'Not Started', 'title': 'Allow new items to be added' },
 ]
 
 
@@ -68,19 +68,16 @@ def save_item(item):
 
     return item
 
-def remove_item(title):
-    
+def remove_item(item):
+
+
     items = get_items()
 
-    item = { 'id': id, 'title': title, 'status': 'Not Started' }
+    #for item in items:
 
-    for item in items:
-  
-        if item['title'] == title:
-            
-        
-            items.remove(item)
-            session['items'] = items
+    items.remove(item)
+    session['items'] = items
 
-
-    return item
+    return items
+    
+    
