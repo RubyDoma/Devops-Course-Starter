@@ -73,8 +73,6 @@ def remove_item(item):
 
     items = get_items()
 
-    #for item in items:
-
     items.remove(item)
     session['items'] = items
 

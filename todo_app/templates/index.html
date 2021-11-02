@@ -10,14 +10,13 @@
   </div>
  
 
-  <!-- <div class="row"> -->
     <div class="col-md-12">
       <br>
       <h2 class="text-center">Your To-do List:</h2>
     
       
       <!-- List the todo items here -->
-      <tbody>
+     
         
         
         <ul class="list-group">
@@ -32,12 +31,12 @@
           {% if item.status == "Not Started" %}
           
         
-        <form class="float-end" method="POST" action="http://127.0.0.1:5000/remove/{{item.id}}">
+        <form class="float-end" method="POST" action="/remove/{{item.id}}">
           <input type="submit"  name="remove" class="btn-secondary" value="🗑️">
           
         </form>
           
-        <form class="float-end" method="POST" action="http://127.0.0.1:5000//mark_complete/{{item.id}}">
+        <form class="float-end" method="POST" action="/mark_complete/{{item.id}}">
           <input type="submit" name="complete" class="btn-secondary" value="✔️" data-source="{{item.id}}">
         </form>
 
@@ -54,10 +53,10 @@
         
 
           {% if item.status == "Completed" %}
-          <form class="float-end" method="POST" action="http://127.0.0.1:5000/remove/{{item.id}}">
+          <form class="float-end" method="POST" action="/remove/{{item.id}}">
             <input type="submit" name="remove" class="btn-secondary" value="🗑️">
           </form>
-          <form class="float-end" method="POST" action="http://127.0.0.1:5000//mark_to_do/{{item.id}}">
+          <form class="float-end" method="POST" action="/mark_to_do/{{item.id}}">
             <input type="submit" name="to_do" class="btn-secondary" value="❌" data-source="{{item.id}}">
           </form>
           <div align ="left">
@@ -72,11 +71,11 @@
       
       {% endfor %}  
 
-      </tbody>
+      
     </ul>
 
       <div class="container-fluid">
-      <form action="http://127.0.0.1:5000/add/add_item", method="POST" class="form-control">
+      <form action="/add/add_item", method="POST" class="form-control">
         <div class=" class="form-control>
           <div align ="center">
           <h5>----------------------- To-Do ----------------------- </h5>
