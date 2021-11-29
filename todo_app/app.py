@@ -2,6 +2,7 @@ from flask import Flask, request, render_template, redirect, url_for
 from todo_app.data.session_items import get_items, add_item, remove_item, save_item, get_item
 
 
+
 from todo_app.flask_config import Config
 
 app = Flask(__name__)
@@ -49,3 +50,5 @@ def mark_as_to_do(item_id):
 
 if __name__ == '__main__':
     app.run()
+
+
