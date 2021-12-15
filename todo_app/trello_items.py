@@ -15,10 +15,11 @@ class Item:
         self.status = status
 
     @classmethod
-    def from_trello_card(cls, card, list):
-        return cls(card['id'], card['name'], list['name'])
+    def from_trello_card(cls, card, list_name):
+        return cls(card['id'], card['name'], list_name)
 
-def fetch_all():
+
+def fetch_to_do():
     call = f"https://api.trello.com/1/boards/{board}/lists?key={key}&token={token}&cards=open"
     headers = {
     "Accept": "application/json"
@@ -31,10 +32,17 @@ def fetch_all():
     )
 
     result = response.json()
+    
+
+    tasks = []
 
     for item in result:
         if item['name'] == 'To Do':
-            return item['cards']
+            for card in item['cards']:
+                task = Item.from_trello_card(card, "To Do")
+                tasks.append(task)
+    return tasks
+
 
 def fetch_done():
     call = f"https://api.trello.com/1/boards/{board}/lists?key={key}&token={token}&cards=open"
@@ -50,9 +58,15 @@ def fetch_done():
 
     result = response.json()
 
+    tasks = []
+
     for item in result:
         if item['name'] == 'Done':
-            return item['cards']
+            for card in item['cards']:
+                task = Item.from_trello_card(card, "Done")
+                tasks.append(task)
+    return tasks
+
 
 def fetch_doing():
     call = f"https://api.trello.com/1/boards/{board}/lists?key={key}&token={token}&cards=open"
@@ -68,14 +82,34 @@ def fetch_doing():
 
     result = response.json()
 
+    tasks = []
+
     for item in result:
         if item['name'] == 'Doing':
-            return item['cards']
+            for card in item['cards']:
+                task = Item.from_trello_card(card, "Doing")
+                tasks.append(task)
+    return tasks
+
 
 
 def add_task_trello(title):
 
     call = f"https://api.trello.com/1/lists/{to_do_id}/cards?name={title}&key={key}&token={token}"
+
+    headers = {
+    "Accept": "application/json"
+    }
+
+    response = requests.request(
+    "POST",
+    url=call,
+    headers=headers
+    )
+
+def add_desc_trello(title):
+
+    call = f"https://api.trello.com/1/cards/{id}/desc?name={title}&key={key}&token={token}"
 
     headers = {
     "Accept": "application/json"
@@ -139,3 +173,4 @@ def doing_task_trello(id):
     response = requests.request("PUT", url=call, headers=headers)
 
     print(response.status_code)
+

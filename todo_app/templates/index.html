@@ -20,7 +20,7 @@
         
         
         <ul class="list-group">
-        {% for item in fetch_all() %}
+          {% for item in tasks %}
           <li class="list-group-item">
             <h5>
               {{item.name}}
@@ -37,17 +37,17 @@
               <input type="hidden" name="complete_id" value="{{item.id}}">
             </form>
             </ul>
+            </li>
 
            
-          </li>
 
       
       {% endfor %}  
 
 
-          <h2 class="text-center">DOING...:</h2>
+          <h2 class="text-center">DOING...</h2>
           <ul class="list-group">
-            {% for item in fetch_doing() %}
+            {% for item in doing_tasks %}
               <li class="list-group-item">
                 <h5>
                   {{item.name}}
@@ -70,7 +70,7 @@
       <h2 class="text-center">COMPLETED:</h2>
 
       <ul class="list-group">
-        {% for item in fetch_done() %}
+        {% for item in done_tasks %}
           <li class="list-group-item">
             <h5>
               {{item.name}}
@@ -98,10 +98,22 @@
         <div class=" class="form-control>
           <div align ="center">
           <h5>----------------------- To-Do ----------------------- </h5>
-          <input type="text" class="col-lg-4 col-lg-offset-10" name="item_name" id="item_id" class=form-control required>
-          <br>
-          <input type="submit" name="add" class="btn btn-info" value="ADD">
-        </form>
+         
+          
+          
+          <label for="Add">Task:</label>
+          <form action="/add/add_item", method="POST" class="form-control">
+            <input type="text" class="col-lg-4 col-lg-offset-10" name="item_name" id="item_id" class=form-control required>
+            <br>
+            <!-- <label for="Add">Description:</label>
+            <form action="/add/desc_item", method="POST" class="form-control">
+              <input type="text" class="col-lg-6 col-lg-offset-10" name="item_name" id="item_id" class=form-control> -->
+              <br>
+              <input type="submit" name="add" class="btn btn-info" value="ADD">
+            </form>
+          </form>
+         
+        
         
           </div>
         </div>
