@@ -107,20 +107,6 @@ def add_task_trello(title):
     headers=headers
     )
 
-def add_desc_trello(title):
-
-    call = f"https://api.trello.com/1/cards/{id}/desc?name={title}&key={key}&token={token}"
-
-    headers = {
-    "Accept": "application/json"
-    }
-
-    response = requests.request(
-    "POST",
-    url=call,
-    headers=headers
-    )
-
 
 def delete_task_trello(id):
 
