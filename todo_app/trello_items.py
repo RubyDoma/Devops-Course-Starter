@@ -19,7 +19,9 @@ class Item:
         return cls(card['id'], card['name'], list_name)
 
 
+
 def fetch_list(list_name):
+
     call = f"https://api.trello.com/1/boards/{board}/lists?key={key}&token={token}&cards=open"
     headers = {
     "Accept": "application/json"
@@ -35,12 +37,15 @@ def fetch_list(list_name):
     
 
     tasks = []
+
     for item in result:
         if item['name'] == list_name:
             for card in item['cards']:
                 task = Item.from_trello_card(card, list_name)
+
                 tasks.append(task)
     return tasks
+
 
 
 def add_task_trello(title):
@@ -70,6 +75,7 @@ def delete_task_trello(id):
     return requests.request("DELETE", url=call, headers=headers)
 
 
+
 def complete_task_trello(id):
 
     call = f"https://api.trello.com/1/cards/{id}?idList={done_id}&key={key}&token={token}"
@@ -79,7 +85,9 @@ def complete_task_trello(id):
     }
 
 
+
     return requests.request("PUT", url=call, headers=headers)
+
 
    
 
@@ -92,11 +100,10 @@ def incomplete_task_trello(id):
     }
 
 
+
     return requests.request("PUT", url=call, headers=headers)
 
     
-
-
 def doing_task_trello(id):
 
     call = f"https://api.trello.com/1/cards/{id}?idList={doing_id}&key={key}&token={token}"
@@ -108,4 +115,4 @@ def doing_task_trello(id):
 
     return requests.request("PUT", url=call, headers=headers)
 
-    
+

@@ -50,3 +50,9 @@ You should see output similar to the following:
  * Debugger PIN: 226-556-590
 ```
 Now visit [`http://localhost:5000/`](http://localhost:5000/) in your web browser to view the app.
+
+Please follow these steps in order to run the project:
+- Sing up to Trello or create an account
+- Generate a Key
+- Generate a Token
+- Declare your Key and Token in the .env file
