@@ -19,7 +19,9 @@ class Item:
         return cls(card['id'], card['name'], list_name)
 
 
-def fetch_to_do():
+
+def fetch_list(list_name):
+
     call = f"https://api.trello.com/1/boards/{board}/lists?key={key}&token={token}&cards=open"
     headers = {
     "Accept": "application/json"
@@ -37,57 +39,10 @@ def fetch_to_do():
     tasks = []
 
     for item in result:
-        if item['name'] == 'To Do':
+        if item['name'] == list_name:
             for card in item['cards']:
-                task = Item.from_trello_card(card, "To Do")
-                tasks.append(task)
-    return tasks
+                task = Item.from_trello_card(card, list_name)
 
-
-def fetch_done():
-    call = f"https://api.trello.com/1/boards/{board}/lists?key={key}&token={token}&cards=open"
-    headers = {
-    "Accept": "application/json"
-    }
-
-    response = requests.request(
-    "GET",
-    url=call,
-    headers=headers
-    )
-
-    result = response.json()
-
-    tasks = []
-
-    for item in result:
-        if item['name'] == 'Done':
-            for card in item['cards']:
-                task = Item.from_trello_card(card, "Done")
-                tasks.append(task)
-    return tasks
-
-
-def fetch_doing():
-    call = f"https://api.trello.com/1/boards/{board}/lists?key={key}&token={token}&cards=open"
-    headers = {
-    "Accept": "application/json"
-    }
-
-    response = requests.request(
-    "GET",
-    url=call,
-    headers=headers
-    )
-
-    result = response.json()
-
-    tasks = []
-
-    for item in result:
-        if item['name'] == 'Doing':
-            for card in item['cards']:
-                task = Item.from_trello_card(card, "Doing")
                 tasks.append(task)
     return tasks
 
@@ -117,7 +72,8 @@ def delete_task_trello(id):
     }
 
 
-    response = requests.request("DELETE", url=call, headers=headers)
+    return requests.request("DELETE", url=call, headers=headers)
+
 
 
 def complete_task_trello(id):
@@ -129,7 +85,9 @@ def complete_task_trello(id):
     }
 
 
-    response = requests.request("PUT", url=call, headers=headers)
+
+    return requests.request("PUT", url=call, headers=headers)
+
 
    
 
@@ -142,11 +100,10 @@ def incomplete_task_trello(id):
     }
 
 
-    response = requests.request("PUT", url=call, headers=headers)
 
-    print(response.status_code)
+    return requests.request("PUT", url=call, headers=headers)
 
-
+    
 def doing_task_trello(id):
 
     call = f"https://api.trello.com/1/cards/{id}?idList={doing_id}&key={key}&token={token}"
@@ -156,7 +113,6 @@ def doing_task_trello(id):
     }
 
 
-    response = requests.request("PUT", url=call, headers=headers)
+    return requests.request("PUT", url=call, headers=headers)
 
-    print(response.status_code)
 
