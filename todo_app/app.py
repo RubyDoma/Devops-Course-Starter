@@ -37,23 +37,6 @@ def mark_incomplete(id):
     incomplete_task_trello(id=request.form['incomplete_id'])
     return redirect(url_for('index'))
 
-    return redirect(url_for('index'))
-
-@app.route('/remove/<id>', methods=['POST'])
-def delete_task(id):
-    delete_task_trello(id=request.form['remove_id'])
-    return redirect(url_for('index'))
-
-@app.route('/mark_complete/<id>', methods=['POST'])
-def mark_complete(id):
-    complete_task_trello(id=request.form['complete_id'])
-    return redirect(url_for('index'))
-
-@app.route('/mark_to_do/<id>', methods=['POST'])
-def mark_incomplete(id):
-    incomplete_task_trello(id=request.form['incomplete_id'])
-    return redirect(url_for('index'))
-
 @app.route('/mark_doing/<id>', methods=['POST'])
 def mark_doing(id):
     doing_task_trello(id=request.form['doing_id'])
