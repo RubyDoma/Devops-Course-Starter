@@ -19,7 +19,7 @@
         
         
         <ul class="list-group">
-          {% for item in to_do_tasks %}
+          {% for item in view_model.to_do_items %}
 
           <li class="list-group-item">
             <h5>
@@ -47,7 +47,7 @@
 
           <h2 class="text-center">DOING...</h2>
           <ul class="list-group">
-            {% for item in doing_tasks %}
+            {% for item in view_model.doing_items %}
               <li class="list-group-item">
                 <h5>
                   {{item.name}}
@@ -70,7 +70,7 @@
       <h2 class="text-center">COMPLETED:</h2>
 
       <ul class="list-group">
-        {% for item in done_tasks %}
+        {% for item in view_model.done_items %}
           <li class="list-group-item">
             <h5>
               {{item.name}}

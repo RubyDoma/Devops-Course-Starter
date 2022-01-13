@@ -18,8 +18,10 @@ class Item:
     def from_trello_card(cls, card, list_name):
         return cls(card['id'], card['name'], list_name)
 
-
-
+        
+        
+            
+    
 def fetch_list(list_name):
 
     call = f"https://api.trello.com/1/boards/{board}/lists?key={key}&token={token}&cards=open"
@@ -42,7 +44,6 @@ def fetch_list(list_name):
         if item['name'] == list_name:
             for card in item['cards']:
                 task = Item.from_trello_card(card, list_name)
-
                 tasks.append(task)
     return tasks
 

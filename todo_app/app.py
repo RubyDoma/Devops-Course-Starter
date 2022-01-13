@@ -2,20 +2,36 @@ from flask import Flask, request, render_template, redirect, url_for
 from todo_app.trello_items import add_task_trello, delete_task_trello, complete_task_trello, fetch_list, doing_task_trello, incomplete_task_trello
 
 
-
 from todo_app.flask_config import Config
 
 app = Flask(__name__)
 app.config.from_object(Config())
 
+class ViewModel:
+    def __init__(self, to_do_items, doing_items, done_items):
+        self._to_do_items = to_do_items
+        self._doing_items = doing_items
+        self._done_items = done_items
+    @property
+    def to_do_items(self):
+        return self._to_do_items
+    @property
+    def doing_items(self):
+        return self._doing_items
+    @property
+    def done_items(self):
+        return self._done_items
+
+to_do_items = fetch_list("To Do")
+doing_items = fetch_list("Doing")
+done_items = fetch_list("Done")
+item_view_model = ViewModel(to_do_items, doing_items, done_items)
 
 @app.route('/', methods=['GET'])
 def index():
-    to_do_tasks = fetch_list("To Do")
-    doing_tasks = fetch_list("Doing")
-    done_tasks = fetch_list("Done")
-    return render_template('index.html', to_do_tasks=to_do_tasks, doing_tasks=doing_tasks, done_tasks=done_tasks)
-
+    
+    return render_template('index.html', view_model=item_view_model)
+    
 @app.route('/add/add_item', methods=['POST'])
 def add_to_do():
     add_task_trello(title=request.form.get('item_name'))
