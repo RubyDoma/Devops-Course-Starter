@@ -8,27 +8,37 @@ app = Flask(__name__)
 app.config.from_object(Config())
 
 class ViewModel:
-    def __init__(self, to_do_items, doing_items, done_items):
-        self._to_do_items = to_do_items
-        self._doing_items = doing_items
-        self._done_items = done_items
+    def __init__(self, items):
+        self._items = items
+
     @property
     def to_do_items(self):
-        return self._to_do_items
+        to_do_output = []
+        for item in self._items:
+            if item.status == "To Do":
+                to_do_output.append(item)
+        return to_do_output
     @property
     def doing_items(self):
-        return self._doing_items
+        doing_output = []
+        for item in self._items:
+            if item.status == "Doing":
+                doing_output.append(item)
+        return doing_output
     @property
     def done_items(self):
-        return self._done_items
+        done_output = []
+        for item in self._items:
+            if item.status == "Done":
+                done_output.append(item)
+        return done_output
+    
 
-to_do_items = fetch_list("To Do")
-doing_items = fetch_list("Doing")
-done_items = fetch_list("Done")
-item_view_model = ViewModel(to_do_items, doing_items, done_items)
 
 @app.route('/', methods=['GET'])
 def index():
+    items = fetch_list()
+    item_view_model = ViewModel(items)
     
     return render_template('index.html', view_model=item_view_model)
     
