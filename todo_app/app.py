@@ -5,7 +5,7 @@ from todo_app.trello_items import add_task_trello, delete_task_trello, complete_
 from todo_app.flask_config import Config
 
 app = Flask(__name__)
-app.config.from_object(Config())
+#app.config.from_object(Config())
 
 class ViewModel:
     def __init__(self, items):
@@ -72,5 +72,4 @@ def mark_doing(id):
 
 if __name__ == '__main__':
     app.run()
-
 

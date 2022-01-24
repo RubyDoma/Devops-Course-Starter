@@ -115,4 +115,3 @@ def doing_task_trello(id):
 
     return requests.request("PUT", url=call, headers=headers)
 
-

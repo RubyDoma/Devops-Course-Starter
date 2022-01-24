@@ -56,3 +56,14 @@ Please follow these steps in order to run the project:
 - Generate a Key
 - Generate a Token
 - Declare your Key and Token in the .env file
+
+
+TESTING
+
+There is a testing section in the code: test_app.py
+In here, you can see the unit tests that have been created.
+To check whether the tests pass, please run: 
+
+$ poetry run pytest 
+
+
