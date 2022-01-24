@@ -5,13 +5,29 @@ from todo_app.app import ViewModel
 
 
 def test_to_do_items_only_shows_items_in_the_to_do_list():
-    to_do_item = Item("1", "ToDoItemName", "To Do")
-    doing_item = Item("2", "DoingItemName", "Doing")
-    done_item = Item("3", "DoneItemName", "Doing")
-    
-    view_model = ViewModel([to_do_item, doing_item, done_item])
-    result = view_model.to_do_items
+    # Test Case Setup
+    items = []
 
-    assert result == [to_do_item]
+    to_do_item = Item("1", "ToDoItemName", "To Do")
+    items.append(to_do_item)
+
+    doing_item = Item("2", "DoingItemName", "Doing")
+    items.append(doing_item)
+
+    done_item = Item("3", "DoneItemName", "Doing")
+    items.append(done_item)
+    
+    view_model = ViewModel(items)
+
+    # End Test Case Setup
+
+    # Start Testing...
+    result: list[Item] = view_model.to_do_items
+
+    # Checking everything worked
+    assert len(result) == 1
+    item = result[0]
+    assert item.status == "To Do"
+    assert result == [to_do_item] 
 
 
