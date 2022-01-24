@@ -57,7 +57,7 @@ def test_doing_items_only_shows_items_in_the_doing_list():
     assert item.status == "Doing"
     assert result == [doing_item] 
 
-def test_done_items_only_shows_items_in_the_doing_list():
+def test_done_items_only_shows_items_in_the_done_list():
     # Test Case Setup
     items = []
 
