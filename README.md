@@ -66,4 +66,5 @@ To check whether the tests pass, please run:
 
 $ poetry run pytest 
 
+The unit tests will test that the three lists (to do, doing, done) will show their items only.
 
