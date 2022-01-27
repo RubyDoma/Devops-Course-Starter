@@ -60,11 +60,24 @@ Please follow these steps in order to run the project:
 
 TESTING
 
-There is a testing section in the code: test_app.py
-In here, you can see the unit tests that have been created.
-To check whether the tests pass, please run: 
+There is a testing section in the code contained in the folder "tests":
+In here you can see:
+
+test_app.py 
+containing the unit tests created.
+These tests will check that three lists (to do, doing, done) show their items only.
+
+test_integration.py
+containing the integration test created.
+This tests checks that the API is working, and uses mocking to avoid making
+external requests. It also doesn't have access to real
+credentials.
+
+To run the tests from a terminal (outside of any IDE) please use the following commands:
 
 $ poetry run pytest 
+or 
+$ poetry run pytest tests/test_file_name 
 
-The unit tests will test that the three lists (to do, doing, done) will show their items only.
+
 

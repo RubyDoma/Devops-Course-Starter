@@ -24,16 +24,12 @@ class Item:
     
 def fetch_list():
 
-    call = f"https://api.trello.com/1/boards/{board}/lists?key={key}&token={token}&cards=open"
+    url = f"https://api.trello.com/1/boards/{board}/lists?key={key}&token={token}&cards=open"
     headers = {
     "Accept": "application/json"
     }
 
-    response = requests.request(
-    "GET",
-    url=call,
-    headers=headers
-    )
+    response = requests.get(url, headers)
 
     result = response.json()
     

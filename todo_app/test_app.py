@@ -1,4 +1,4 @@
-from unittest import result
+import unittest
 from todo_app.trello_items import Item
 from todo_app.app import ViewModel
     

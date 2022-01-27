@@ -36,14 +36,11 @@
               <input type="submit" name="complete" class="btn-secondary" value="✔️" data-source="{{item.id}}">
               <input type="hidden" name="complete_id" value="{{item.id}}">
             </form>
+            
+          
+          </li>
+            {% endfor %}  
             </ul>
-            </li>
-
-           
-
-      
-      {% endfor %}  
-
 
           <h2 class="text-center">DOING...</h2>
           <ul class="list-group">
@@ -63,9 +60,9 @@
                   <input type="submit" name="complete" class="btn-secondary" value="✔️" data-source="{{item.id}}">
                   <input type="hidden" name="complete_id" value="{{item.id}}">
                 </form>
-                </ul>
               </li>
-                {% endfor %}  
+              {% endfor %}  
+            </ul>
 
       <h2 class="text-center">COMPLETED:</h2>
 
@@ -106,7 +103,7 @@
           {% if loop.index > 5 %}
 
           <li class="list-group-item">
-          {{item.name}}
+         <h5> {{item.name}}
          
           <form class="float-end" method="POST" action="/remove/{{item.id}}">
           <input type="submit" name="remove" class="btn-secondary" value="🗑️">
@@ -123,6 +120,9 @@
         </li>
         {% endif %}  
         {% endfor %}  
+      </h5>
+      
+       
         
         
         
@@ -132,8 +132,6 @@
     </ul>
 
 
-        
-       
 
       
                           
