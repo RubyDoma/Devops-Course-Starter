@@ -25,7 +25,7 @@ def test_index_page(monkeypatch, client):
     response = client.get('/')
 
     assert response.status_code == 200
-    assert -b'fake data' in response.data
+    assert b'Test card' in response.data
 
 class StubResponse():
     def __init__(self, fake_response_data):
@@ -36,33 +36,13 @@ class StubResponse():
 
 def get_lists_stub(url, headers):
     test_board_id = os.environ.get('BOARD_ID')
-    fake_response_data = Mock(ok=True)
-    if url == f'https://api.trello.com/1/boards/{test_board_id}/lists':
+    fake_response_data = []
+    if url.startswith(f'https://api.trello.com/1/boards/{test_board_id}/lists'):
         fake_response_data = [{
         'id': '123abc',
         'name': 'To Do',
         'cards': [{'id': '456', 'name': 'Test card'}]
         }]
-        #response.json.return_value = fake_response_data
-    return StubResponse(fake_response_data)
+        return StubResponse(fake_response_data)
+    raise Exception
     
-
-# sample_trello_lists_response = [{
-#     'id': 'to-do-id',
-#     'cards': [{
-#         'idList': 'to-do-id',
-#         'name': 'fake data',
-#         'status': "To Do"
-#     }, {
-
-#     }]
-# }]
-    
-
-# def get_lists_stub(url, headers):
-#     if url == 'https://api.trello.com/1/boards/pLhPvlZc/lists':
-#         response = Mock(ok=True)
-#         response.json.return_value = sample_trello_lists_response
-#         return response
-
-#     return None
