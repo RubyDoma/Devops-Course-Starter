@@ -18,32 +18,28 @@ class Item:
     def from_trello_card(cls, card, list_name):
         return cls(card['id'], card['name'], list_name)
 
+        
+        
+            
+    
+def fetch_list():
 
-
-def fetch_list(list_name):
-
-    call = f"https://api.trello.com/1/boards/{board}/lists?key={key}&token={token}&cards=open"
+    url = f"https://api.trello.com/1/boards/{board}/lists?key={key}&token={token}&cards=open"
     headers = {
     "Accept": "application/json"
     }
 
-    response = requests.request(
-    "GET",
-    url=call,
-    headers=headers
-    )
+    response = requests.get(url, headers)
 
     result = response.json()
     
 
     tasks = []
 
-    for item in result:
-        if item['name'] == list_name:
-            for card in item['cards']:
-                task = Item.from_trello_card(card, list_name)
-
-                tasks.append(task)
+    for list in result:
+        for card in list['cards']:
+            task = Item.from_trello_card(card, list["name"])
+            tasks.append(task)
     return tasks
 
 
@@ -114,5 +110,4 @@ def doing_task_trello(id):
 
 
     return requests.request("PUT", url=call, headers=headers)
-
 

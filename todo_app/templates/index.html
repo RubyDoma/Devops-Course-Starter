@@ -19,7 +19,7 @@
         
         
         <ul class="list-group">
-          {% for item in to_do_tasks %}
+          {% for item in view_model.to_do_items %}
 
           <li class="list-group-item">
             <h5>
@@ -36,18 +36,15 @@
               <input type="submit" name="complete" class="btn-secondary" value="✔️" data-source="{{item.id}}">
               <input type="hidden" name="complete_id" value="{{item.id}}">
             </form>
+            
+          
+          </li>
+            {% endfor %}  
             </ul>
-            </li>
-
-           
-
-      
-      {% endfor %}  
-
 
           <h2 class="text-center">DOING...</h2>
           <ul class="list-group">
-            {% for item in doing_tasks %}
+            {% for item in view_model.doing_items %}
               <li class="list-group-item">
                 <h5>
                   {{item.name}}
@@ -63,34 +60,81 @@
                   <input type="submit" name="complete" class="btn-secondary" value="✔️" data-source="{{item.id}}">
                   <input type="hidden" name="complete_id" value="{{item.id}}">
                 </form>
-                </ul>
               </li>
-                {% endfor %}  
+              {% endfor %}  
+            </ul>
 
       <h2 class="text-center">COMPLETED:</h2>
 
       <ul class="list-group">
-        {% for item in done_tasks %}
+        {% for item in view_model.done_items %}
           <li class="list-group-item">
             <h5>
+              {% if loop.index <= 5 %}
+
               {{item.name}}
               <form class="float-end" method="POST" action="/remove/{{item.id}}">
-              <input type="submit" name="remove" class="btn-secondary" value="🗑️">
-              <input type="hidden" name="remove_id" value="{{item.id}}">
-            </form>
-            <form class="float-end" method="POST" action="/mark_doing/{{item.id}}">
-              <input type="submit" name="doing" class="btn-secondary" value="doing" data-source="{{item.id}}">
-              <input type="hidden" name="doing_id" value="{{item.id}}">
-            </form>
-            <form class="float-end" method="POST" action="/mark_to_do/{{item.id}}">
-              <input type="submit" name="to_do" class="btn-secondary" value="to do" data-source="{{item.id}}">
-              <input type="hidden" name="incomplete_id" value="{{item.id}}">
-            </form>
-            </ul>
+                <input type="submit" name="remove" class="btn-secondary" value="🗑️">
+                <input type="hidden" name="remove_id" value="{{item.id}}">
+              </form>
+              <form class="float-end" method="POST" action="/mark_doing/{{item.id}}">
+                <input type="submit" name="doing" class="btn-secondary" value="doing" data-source="{{item.id}}">
+                <input type="hidden" name="doing_id" value="{{item.id}}">
+              </form>
+              <form class="float-end" method="POST" action="/mark_to_do/{{item.id}}">
+                <input type="submit" name="to_do" class="btn-secondary" value="to do" data-source="{{item.id}}">
+                <input type="hidden" name="incomplete_id" value="{{item.id}}">
+              </form>
+            
+            
+            </li>
+          
+              {% endif %}  
+              {% endfor %}  
+    
+            
+               
+          <details>
+          <summary><u>Show older completed tasks</u></summary>
 
-           
-          </li>
-          {% endfor %}  
+          {% for item in view_model.done_items %}
+          
+
+          {% if loop.index > 5 %}
+
+          <li class="list-group-item">
+         <h5> {{item.name}}
+         
+          <form class="float-end" method="POST" action="/remove/{{item.id}}">
+          <input type="submit" name="remove" class="btn-secondary" value="🗑️">
+          <input type="hidden" name="remove_id" value="{{item.id}}">
+          </form>
+          <form class="float-end" method="POST" action="/mark_doing/{{item.id}}">
+          <input type="submit" name="doing" class="btn-secondary" value="doing" data-source="{{item.id}}">
+          <input type="hidden" name="doing_id" value="{{item.id}}">
+          </form>
+          <form class="float-end" method="POST" action="/mark_to_do/{{item.id}}">
+          <input type="submit" name="to_do" class="btn-secondary" value="to do" data-source="{{item.id}}">
+          <input type="hidden" name="incomplete_id" value="{{item.id}}">
+          </form>
+        </li>
+        {% endif %}  
+        {% endfor %}  
+      </h5>
+      
+       
+        
+        
+        
+        
+      </details>
+      
+    </ul>
+
+
+
+      
+                          
 
 
       <div class="container-fluid">
