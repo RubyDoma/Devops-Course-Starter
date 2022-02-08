@@ -1,17 +1,12 @@
 import os
 import requests
 from todo_app import app
-from unittest.mock import patch, Mock
+from unittest.mock import Mock
 from dotenv import load_dotenv, find_dotenv
 
 import pytest
 from dotenv import load_dotenv, find_dotenv
 from todo_app.app import create_app
-
-# @pytest.fixture
-# def test_evironment_vars():
-#     file_path = find_dotenv('env.test')
-#     load_dotenv(file_path, override=True)
 
 @pytest.fixture
 def client():

@@ -70,9 +70,5 @@ def create_app():
         doing_task_trello(id=request.form['doing_id'])
         return redirect(url_for('index'))
 
-        
-
-    if __name__ == '__main__':
-        app.run()
 
     return app
