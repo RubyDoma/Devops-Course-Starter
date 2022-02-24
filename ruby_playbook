@@ -1,6 +1,34 @@
 - name: ToDo App
   hosts: ruby-hosts
   remote_user: ec2-user
+  vars_prompt:
+
+    - name: key
+      prompt: What is your API key?
+      private: yes
+
+    - name: token
+      prompt: What is your token?
+      private: yes
+
+    - name: board ID
+      prompt: What is the board ID?
+      private: yes
+
+    - name: todo ID
+      prompt: What is the ID of the To-Do list?
+      private: yes
+
+    - name: doing ID
+      prompt: What is the ID of the Doing list?
+      private: yes 
+
+    - name: done ID
+      prompt: What is the ID of the Done list?
+      private: yes
+
+
+
   tasks:
   - name: Install Git
     ansible.builtin.yum:
@@ -18,4 +46,27 @@
     args:
       chdir: ~/.local/bin/
       creates: poetry
-  
+
+  - name: Create directory for the To-Do App code
+    ansible.builtin.file:
+      path: /opt/todoapp
+      state: directory
+      owner: ec2-user
+    become: yes
+
+  - name: Git checkout
+    ansible.builtin.git:
+      repo: 'https://github.com/RubyDoma/Devops-Course-Starter.git'
+      dest: /opt/todoapp
+      version: exercise-4
+
+  - name: Install project dependencies 
+    ansible.builtin.command: ~/.local/bin/poetry_install.sh db_user db_name
+    args:
+      creates: ~/.local/bin/
+ 
+
+  - name: Create .env file from a template
+    ansible.builtin.template:
+      src: .env.j2
+      dest: /opt/todoapp/.env
