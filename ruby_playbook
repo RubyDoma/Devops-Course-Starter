@@ -1,0 +1,21 @@
+- name: ToDo App
+  hosts: ruby-hosts
+  remote_user: ec2-user
+  tasks:
+  - name: Install Git
+    ansible.builtin.yum:
+      name: git
+      state: latest
+    become: yes
+
+  - name: Install Python3
+    ansible.builtin.yum:
+      name: python3
+      state: latest
+
+  - name: Install Poetry
+    ansible.builtin.shell: curl -sSL https://install.python-poetry.org | python3
+    args:
+      chdir: ~/.local/bin/
+      creates: poetry
+  
