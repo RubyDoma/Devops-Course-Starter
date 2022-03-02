@@ -3,29 +3,29 @@
   remote_user: ec2-user
   vars_prompt:
 
-    - name: key
+    - name: RUBY_KEY
       prompt: What is your API key?
-      private: yes
+      private: no
 
-    - name: token
+    - name: RUBY_TOKEN
       prompt: What is your token?
-      private: yes
+      private: no
 
-    - name: board ID
+    - name: BOARD_ID
       prompt: What is the board ID?
-      private: yes
+      private: no
 
-    - name: todo ID
+    - name: TO_DO_ID
       prompt: What is the ID of the To-Do list?
-      private: yes
+      private: no
 
-    - name: doing ID
+    - name: DOING_ID
       prompt: What is the ID of the Doing list?
-      private: yes 
+      private: no 
 
-    - name: done ID
+    - name: DONE_ID
       prompt: What is the ID of the Done list?
-      private: yes
+      private: no
 
 
 
@@ -70,3 +70,14 @@
     ansible.builtin.template:
       src: .env.j2
       dest: /opt/todoapp/.env
+
+  - name: Copy the 'todoapp.service' over to host
+    ansible.builtin.copy:
+      src: todoapp.service
+      dest: /etc/systemd/system/todoapp.service
+    become: yes
+
+  - name: Reload todoapp.service 
+    ansible.builtin.systemd: 
+      daemon_reload: yes  
+    become: yes
