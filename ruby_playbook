@@ -80,7 +80,7 @@
 
   - name: Reload todoapp.service
     ansible.builtin.systemd:
-     state: reloaded
+     state: restarted
      daemon_reload: yes
      name: todoapp.service
     become: yes
