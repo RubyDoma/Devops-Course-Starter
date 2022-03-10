@@ -61,9 +61,10 @@
       version: exercise-4
 
   - name: Install project dependencies 
-    ansible.builtin.command: ~/.local/bin/poetry_install.sh db_user db_name
+    ansible.builtin.command: ~/.local/bin/poetry_install
     args:
-      creates: ~/.local/bin/
+      chdir: /opt/todoapp
+      creates: .venv
  
 
   - name: Create .env file from a template

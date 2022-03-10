@@ -4,4 +4,3 @@ Description=My To-Do App
 User=ec2-user
 WorkingDirectory=/opt/todoapp
 ExecStart=/home/ec2-user/.local/bin/poetry run flask run --host=0.0.0.0
-
