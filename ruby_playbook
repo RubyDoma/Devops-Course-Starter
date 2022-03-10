@@ -78,7 +78,9 @@
       dest: /etc/systemd/system/todoapp.service
     become: yes
 
-  - name: Reload todoapp.service 
-    ansible.builtin.systemd: 
-      daemon_reload: yes  
+  - name: Reload todoapp.service
+    ansible.builtin.systemd:
+     state: reloaded
+     daemon_reload: yes
+     name: todoapp.service
     become: yes
