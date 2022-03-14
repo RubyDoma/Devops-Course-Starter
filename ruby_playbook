@@ -1,0 +1,86 @@
+- name: ToDo App
+  hosts: ruby-hosts
+  remote_user: ec2-user
+  vars_prompt:
+
+    - name: RUBY_KEY
+      prompt: What is your API key?
+      private: no
+
+    - name: RUBY_TOKEN
+      prompt: What is your token?
+      private: no
+
+    - name: BOARD_ID
+      prompt: What is the board ID?
+      private: no
+
+    - name: TO_DO_ID
+      prompt: What is the ID of the To-Do list?
+      private: no
+
+    - name: DOING_ID
+      prompt: What is the ID of the Doing list?
+      private: no 
+
+    - name: DONE_ID
+      prompt: What is the ID of the Done list?
+      private: no
+
+
+
+  tasks:
+  - name: Install Git
+    ansible.builtin.yum:
+      name: git
+      state: latest
+    become: yes
+
+  - name: Install Python3
+    ansible.builtin.yum:
+      name: python3
+      state: latest
+
+  - name: Install Poetry
+    ansible.builtin.shell: curl -sSL https://install.python-poetry.org | python3
+    args:
+      chdir: ~/.local/bin/
+      creates: poetry
+
+  - name: Create directory for the To-Do App code
+    ansible.builtin.file:
+      path: /opt/todoapp
+      state: directory
+      owner: ec2-user
+    become: yes
+
+  - name: Git checkout
+    ansible.builtin.git:
+      repo: 'https://github.com/RubyDoma/Devops-Course-Starter.git'
+      dest: /opt/todoapp
+      version: exercise-4
+
+  - name: Install project dependencies 
+    ansible.builtin.command: ~/.local/bin/poetry_install
+    args:
+      chdir: /opt/todoapp
+      creates: .venv
+ 
+
+  - name: Create .env file from a template
+    ansible.builtin.template:
+      src: .env.j2
+      dest: /opt/todoapp/.env
+
+  - name: Copy the 'todoapp.service' over to host
+    ansible.builtin.copy:
+      src: todoapp.service
+      dest: /etc/systemd/system/todoapp.service
+    become: yes
+
+  - name: Reload todoapp.service
+    ansible.builtin.systemd:
+     state: restarted
+     daemon_reload: yes
+     name: todoapp.service
+    become: yes
