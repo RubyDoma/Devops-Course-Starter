@@ -91,11 +91,11 @@ Make sure you can connect to your host VM via SSH for this command to run succes
 
 ## RUNNING APP LOCALLY IN A CONTAINER
 
-Use the following command to spin up the three containers: dev, test and prod):
+Use the following command to spin up the three containers: dev, test and prod:
 
 $ docker-compose up
 
-Use one of the folliwing commands to spin up one container at a time:
+Use one of the folliwing commands to spin up one container one at a time:
 
 $ docker-compose up webapp-prod
 $ docker-compose up webapp-dev
