@@ -88,7 +88,6 @@ $ ansible-playbook Playbook -i Inventory --ask-vault-pass
 
 Make sure you can connect to your host VM via SSH for this command to run successfully.
 
-
 ## RUNNING APP LOCALLY IN A CONTAINER
 
 Use the following command to spin up the three containers: dev, test and prod):
@@ -100,3 +99,4 @@ Use one of the folliwing commands to spin up one container at a time:
 $ docker-compose up webapp-prod
 $ docker-compose up webapp-dev
 $ docker-compose up webapp-test
+
