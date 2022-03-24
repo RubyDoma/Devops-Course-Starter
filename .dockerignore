@@ -5,11 +5,9 @@
 .env.dev
 .env.template
 .gitignore
-env_vars.yml
 Inventory
-Playbook
+ruby_playbook
 poetry.lock
-README.md
 todoapp.service
-Dockerfile.prod
-docker-compose.yml
+Dockerfile
+README.md
