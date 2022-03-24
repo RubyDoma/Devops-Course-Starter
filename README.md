@@ -94,7 +94,7 @@ Use the following command to spin up the three containers: dev, test and prod:
 
 $ docker-compose up
 
-Use the folliwing commands to spin up the three containers separately: 
+Use the folliwing commands to spin up the three containers separately:
 
 $ docker-compose up webapp-prod
 $ docker-compose up webapp-dev
