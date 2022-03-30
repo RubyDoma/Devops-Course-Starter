@@ -79,7 +79,6 @@ $ poetry run pytest
 or 
 $ poetry run pytest tests/test_file_name 
 
-
 ## ANSIBLE
 
 Log to your Control Node and use this command to provision host VM:
@@ -88,3 +87,18 @@ Log to your Control Node and use this command to provision host VM:
 $ ansible-playbook Playbook -i Inventory --ask-vault-pass
 
 Make sure you can connect to your host VM via SSH for this command to run successfully.
+
+## RUNNING APP LOCALLY IN A CONTAINER
+
+Use the following command to spin up the three containers: dev, test and prod:
+
+$ docker-compose up --build
+
+Use the folliwing commands to spin up the three containers separately:
+
+$ docker-compose up webapp-prod
+$ docker-compose up webapp-dev
+$ docker-compose up webapp-test
+
+
+
