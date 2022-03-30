@@ -36,4 +36,4 @@ services:
     volumes:
       - type: bind
         source: ./todo_app
-        target: /opt/
+        target: /opt/todo_app
