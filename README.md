@@ -92,7 +92,7 @@ Make sure you can connect to your host VM via SSH for this command to run succes
 
 Use the following command to spin up the three containers: dev, test and prod:
 
-$ docker-compose up
+$ docker-compose up --build
 
 Use the folliwing commands to spin up the three containers separately:
 
