@@ -4,10 +4,8 @@ jobs:
   build:
     name: Build and test
     runs-on: ubuntu-latest
-    env:
-    COMPOSE_FILE: ./docker-compose.yml
     steps:
     - uses: actions/checkout@v2
     - run: docker build . --file Dockerfile --tag todo-app
-    - run: docker-compose run test
+    - run: docker run test todo-app
     
