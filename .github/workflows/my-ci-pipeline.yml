@@ -6,7 +6,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - run: test
+    - with:
+      - webapp-test:
+          container_name: test
+          build:
+            dockerfile: Dockerfile
+            context: .
+            target: test
+          volumes:
+            - type: bind
+              source: ./todo_app
+              target: /opt/todo_app
+   
+
+
    
   
 
