@@ -1,7 +1,6 @@
 name: Continuous Integration
 on: [push]
 jobs:
-  container_name: test
   build:
     name: Build and test
     runs-on: ubuntu-latest
