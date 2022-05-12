@@ -2,13 +2,13 @@ name: Continuous Integration
 on: [push]
 jobs:
   build:
+    name: Build and test
+    runs-on: ubuntu-latest
     dockerfile: Dockerfile
-      context: .
-      target: test
-    volumes:
-      - type: bind
-        source: ./todo_app
-        target: /opt/todo_app
-
+    steps:
+    - uses: actions/checkout@v2
+    - run: test
    
-      
+  
+
+    
