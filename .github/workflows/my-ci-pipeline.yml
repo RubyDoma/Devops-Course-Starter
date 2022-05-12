@@ -4,12 +4,7 @@ jobs:
   build:
     name: Build and test
     runs-on: ubuntu-latest
+    test:
     steps:
     - uses: actions/checkout@v2
     - run: docker build . --file Dockerfile --tag todo-app
-
-     - name: Run tests
-      run: docker-compose run test
-
-
-
