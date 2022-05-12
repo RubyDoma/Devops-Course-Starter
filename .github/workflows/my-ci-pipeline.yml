@@ -7,5 +7,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - run: docker build . --file Dockerfile --tag todo-app
-    - run: docker run --name test todo-app
+    - run: docker run --name test todo-app python test_app.py
+    - run: docker run --name test todo-app python test_integration.py
     
