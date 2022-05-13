@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - run: docker build . --file Dockerfile --tag todo-app
-    - run: docker run --name test todo-app python /opt/todo_app/test_app.py
-    - run: docker run --name test todo-app python /opt/todo_app/test_integration.py
+    #- run: docker build . --file Dockerfile --tag todo-app
+    run: docker build . -t todo-app --target test
+    
 
