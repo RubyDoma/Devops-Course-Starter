@@ -7,6 +7,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - run: docker build . -t todo-app --target test
-    - run: docker run todo-app poetry todo_app/test_integration.py
+    - run: docker run todo-app
     
 
