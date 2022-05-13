@@ -7,6 +7,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - run: docker build . -t todo-app --target test
-    - run: docker run todo-app:unit-test pyunit
+    - run: docker run todo-app:test_app pyunit
     
 
