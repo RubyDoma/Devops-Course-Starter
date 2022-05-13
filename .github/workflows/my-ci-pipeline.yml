@@ -1,9 +1,5 @@
 name: Continuous Integration
-on: [push, pull-request]
-# types: 
-#   - closed
-# branches: exercise-7
-#   - 
+on: [push]
 jobs:
   build:
     name: Build and test
