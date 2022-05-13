@@ -7,12 +7,13 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python 3.6
-        uses: actions/setup-python@v1
-        with:
+      uses: actions/setup-python@v1
+      with:
           python-version: 3.6
-      - name: Install dependencies
-        run: |
+    - name: Install dependencies
+      run: |
           python -m pip install --upgrade pip
+    - name: Test with pytest
     - run: docker build . -t todo-app --target test
     - run: docker run --name test todo-app python /opt/todo_app/test_app.py
     
