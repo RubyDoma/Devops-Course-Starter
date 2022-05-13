@@ -7,5 +7,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - run: docker build . -t todo-app --target test
+    - run: docker build . -t todo-app:test_app.py --target test
     
 
