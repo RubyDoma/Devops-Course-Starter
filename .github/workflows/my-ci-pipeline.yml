@@ -6,7 +6,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    #- run: docker build . --file Dockerfile --tag todo-app
     - run: docker build . -t todo-app --target test
     
 
