@@ -17,4 +17,3 @@ ENTRYPOINT ["sh", "/opt/flask.sh" ]
 FROM base as test
 ENV PATH="${PATH}:/root/todo_app"
 CMD ["poetry", "run", "pytest"]
-#ENTRYPOINT ["sh", "/opt/test.sh" ]
