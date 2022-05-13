@@ -4,10 +4,9 @@ jobs:
   build:
     name: Build and test
     runs-on: ubuntu-latest
-    timeout-minutes: 2
     steps:
     - uses: actions/checkout@v2
     - run: docker build . -t todo-app --target test
-    - run: docker run todo-app ./todo_app/test_app.py
+    - run: docker run todo-app /opt/test.sh
     
 
