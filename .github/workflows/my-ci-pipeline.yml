@@ -1,8 +1,6 @@
 name: Continuous Integration
 on:
   push:
-    branches:
-      - exercise-7
     paths-ignore:
       - '**.md'
   pull_request:
