@@ -60,8 +60,7 @@ Please follow these steps in order to run the project:
 
 TESTING
 
-There is a testing section in the code contained in the folder "tests":
-In here you can see:
+There are 2 files containinig unit and integration tests:
 
 test_app.py 
 containing the unit tests created.
@@ -77,7 +76,7 @@ To run the tests from a terminal (outside of any IDE) please use the following c
 
 $ poetry run pytest 
 or 
-$ poetry run pytest tests/test_file_name 
+$ poetry run pytest todo_app/test_file_name.py
 
 ## ANSIBLE
 
