@@ -70,7 +70,7 @@
         {% for item in view_model.done_items %}
           <li class="list-group-item">
             <h5>
-              {% if loop.index <= 5 %}
+              {% if loop.index <= 10 %}
 
               {{item.name}}
               <form class="float-end" method="POST" action="/remove/{{item.id}}">
