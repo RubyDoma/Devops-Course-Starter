@@ -40,7 +40,7 @@ jobs:
 
     steps:
     - name: Azure WebApp
-      run: echo ${{secrets.WEBHOOK_URL}}
+      run: curl -dH -X POST ${{secrets.WEBHOOK_URL}}
 
  
 
