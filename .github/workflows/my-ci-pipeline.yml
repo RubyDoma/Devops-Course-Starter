@@ -32,7 +32,13 @@ jobs:
       
     - name: Push Image to Docker Hub
       run: docker push rubydoma/todo-app-exercise-8
-    
+
+  Azure:
+    name: Update App on Azure
+    runs-on: ubuntu-latest
+    needs: dockerhub
+
+    steps:
     - name: Azure WebApp
       run: echo ${{secrets.WEBHOOK_URL}}
 
