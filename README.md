@@ -93,14 +93,15 @@ Use the following command to spin up the three containers: dev, test and prod:
 
 $ docker-compose up --build
 
-Use the folliwing commands to spin up the three containers separately:
+Use the following commands to spin up the three containers separately:
 
 $ docker-compose up webapp-prod
 $ docker-compose up webapp-dev
 $ docker-compose up webapp-test
 
-## OPEN APP IN HEROKU
+## LINK TO AZURE WEBAPP
 
-https://todo-app-exercise-8.herokuapp.com/
+http://ruby-webapp.azurewebsites.net/
+
 
 
