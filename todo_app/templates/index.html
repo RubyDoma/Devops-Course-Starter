@@ -23,12 +23,14 @@
 
           <li class="list-group-item">
             <h5>
-              {{item.name}}
+              {{item.url_name}}
+           
+
               <form class="float-end" method="POST" action="/remove/{{item.id}}">
               <input type="submit" name="remove" class="btn-secondary" value="🗑️">
               <input type="hidden" name="remove_id" value="{{item.id}}">
             </form>
-            <form class="float-end" method="POST" action="/mark_doing/{{item.id}}">
+            <form class="float-end" method="POST" action="/mark_doing/{{item._id}}">
               <input type="submit" name="doing" class="btn-secondary" value="doing" data-source="{{item.id}}">
               <input type="hidden" name="doing_id" value="{{item.id}}">
             </form>
@@ -47,7 +49,7 @@
             {% for item in view_model.doing_items %}
               <li class="list-group-item">
                 <h5>
-                  {{item.name}}
+                  {{item.title}}
                   <form class="float-end" method="POST" action="/remove/{{item.id}}">
                   <input type="submit" name="remove" class="btn-secondary" value="🗑️">
                   <input type="hidden" name="remove_id" value="{{item.id}}">
@@ -72,7 +74,7 @@
             <h5>
               {% if loop.index <= 5 %}
 
-              {{item.name}}
+              {{item.title}}
               <form class="float-end" method="POST" action="/remove/{{item.id}}">
                 <input type="submit" name="remove" class="btn-secondary" value="🗑️">
                 <input type="hidden" name="remove_id" value="{{item.id}}">
@@ -103,7 +105,7 @@
           {% if loop.index > 5 %}
 
           <li class="list-group-item">
-         <h5> {{item.name}}
+         <h5> {{item.title}}
          
           <form class="float-end" method="POST" action="/remove/{{item.id}}">
           <input type="submit" name="remove" class="btn-secondary" value="🗑️">
