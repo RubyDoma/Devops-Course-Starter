@@ -1,3 +1,4 @@
+from asyncio import Task
 from bson.objectid import ObjectId
 import pymongo
 import os
@@ -10,27 +11,33 @@ connection_string = os.environ.get('CONNECTION_STRING')
 client = pymongo.MongoClient(connection_string) 
 db_name = os.environ.get('COSMOSODB_NAME')
 collection = os.environ.get('COLLECTION_NAME')
-tasks = client[f"{db_name}"][f"{collection}"]
+tasks_in_cosmosaccount = client[f"{db_name}"][f"{collection}"]
 
 
-class Task:
+
+class Item:
     def __init__(self, id, title, status):
         self.id = id
         self.title = title
         self.status = status
+
+    @classmethod
+    def from_cosmos_account(cls):
+        return cls(id=["_id"], title=["title"], status=["status"])
 
 
 class MongoDBTasks:
     
     def get_all_tasks(self):
         tasks_list = []
-        for task in tasks.find():
-            tasks_list.append(Task(id=task["_id"], title=task["title"], status=tasks["status"]))
+        for task in tasks_in_cosmosaccount.find():
+            tasks_list.append(Item(id=task["_id"], title=task["title"], status=task["status"]))
         return tasks_list
+
     
     def get_task(self, id):
         id_filter = {"_id": ObjectId(id)}
-        task = tasks.find_one(id_filter)
+        task = tasks_in_cosmosaccount.find_one(id_filter)
 
         return task
 
@@ -39,11 +46,11 @@ class MongoDBTasks:
             "title": title,
             "status": "To do"
         }
-        tasks.insert_one(task)
+        tasks_in_cosmosaccount.insert_one(task)
 
     def delete_task(self, id):
         id_filter = {"_id": ObjectId(id)}
-        tasks.delete_one(id_filter)
+        tasks_in_cosmosaccount.delete_one(id_filter)
 
    
     def mark_as_completed(self, id):
@@ -53,7 +60,7 @@ class MongoDBTasks:
                 "status": "Done"
             }
         }
-        tasks.update_one(id_filter, update_task_values)
+        tasks_in_cosmosaccount.update_one(id_filter, update_task_values)
     
     def mark_as_doing(self, id):
         id_filter = {"_id": ObjectId(id)}
@@ -62,7 +69,7 @@ class MongoDBTasks:
                 "status": "Doing"
             }
         }
-        tasks.update_one(id_filter, update_task_values)
+        tasks_in_cosmosaccount.update_one(id_filter, update_task_values)
     
     def mark_as_to_do(self, id):
         id_filter = {"_id": ObjectId(id)}
@@ -71,6 +78,6 @@ class MongoDBTasks:
                 "status": "To do"
             }
         }
-        tasks.update_one(id_filter, update_task_values)
+        tasks_in_cosmosaccount.update_one(id_filter, update_task_values)
 
 

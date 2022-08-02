@@ -36,7 +36,7 @@ def create_app():
     mongodbtasks = MongoDBTasks()
 
 
-    @app.route('/', methods=['GET', 'POST'])
+    @app.route('/')
     def index():
         items = mongodbtasks.get_all_tasks()
         item_view_model = ViewModel(items)

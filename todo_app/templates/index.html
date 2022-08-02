@@ -23,7 +23,8 @@
 
           <li class="list-group-item">
             <h5>
-              {{item.url_name}}
+              
+              {{item['title']}}
            
 
               <form class="float-end" method="POST" action="/remove/{{item.id}}">
@@ -41,6 +42,7 @@
             
           
           </li>
+       
             {% endfor %}  
             </ul>
 
