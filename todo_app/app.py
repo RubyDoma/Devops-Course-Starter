@@ -15,18 +15,25 @@ class ViewModel:
         def to_do_items(self):
             to_do_output = []
             for item in self._tasks:
-                if item.status == "To Do":
+                if item.status == "To do":
                     to_do_output.append(item)
             return to_do_output
 
-           #return [task for task in self._tasks if task.status == "To do"] 
-                               
         @property
-        def doing_items(self):   
-           return [task for task in self._tasks if task.status == "Doing"]
+        def doing_items(self):
+            doing_output = []
+            for item in self._tasks:
+                if item.status == "Doing":
+                    doing_output.append(item)
+            return doing_output
+            
         @property
         def done_items(self):
-            return [task for task in self._tasks if task.status == "Done"]
+            done_output = []
+            for item in self._tasks:
+                if item.status == "Done":
+                    done_output.append(item)
+            return done_output
 
 
 
@@ -60,8 +67,8 @@ def create_app():
         mongodbtasks.mark_as_completed(id=request.form['complete_id'])
         return redirect(url_for('index'))
 
-    @app.route('/mark_doing/<id>', methods=['POST'])
-    def mark_doing(id):
+    @app.route('/mark_doing/<_id>', methods=['POST'])
+    def mark_doing(_id):
         mongodbtasks.mark_as_doing(id=request.form['doing_id'])
         return redirect(url_for('index'))
 

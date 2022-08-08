@@ -42,10 +42,6 @@ jobs:
     - name: Azure WebApp
       run: curl -dH -X POST ${{secrets.WEBHOOK_URL}}
     
-    - name: CosmosDB
-      #${{secrets.CONNECTION_STRING}}
-      #${{secrets.COLLECTION_NAME}}
-      #${{secrets.COSMOSDB_NAME}}
 
       
 
