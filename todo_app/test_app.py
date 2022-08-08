@@ -5,7 +5,7 @@ from todo_app.mongodb_items import Item
 @pytest.fixture
 def items():
     _tasks = []
-    to_do_item = Item("1", "ToDoItemName", "To Do")
+    to_do_item = Item("1", "ToDoItemName", "To do")
     _tasks.append(to_do_item)
     doing_item = Item("2", "DoingItemName", "Doing")
     _tasks.append(doing_item)
@@ -22,7 +22,7 @@ def test_to_do_items_only_shows_items_in_the_to_do_list(items):
     # Checking everything worked
     assert len(result) == 1
     item = result[0]
-    assert item.status == "To Do"
+    assert item.status == "To do"
     assert item.title == 'ToDoItemName'
 
 def test_to_do_items_only_shows_items_in_the_doing_list(items):
