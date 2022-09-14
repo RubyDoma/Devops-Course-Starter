@@ -1,6 +1,6 @@
 from multiprocessing import allow_connection_pickling
-from flask import Flask, request, render_template, redirect, url_for, redirect, jsonify
-from flask_login import LoginManager , login_required, current_user, UserMixin
+from flask import Flask, request, render_template, redirect, redirect, jsonify
+from flask_login import LoginManager , login_required, UserMixin
 from todo_app.mongodb_items import MongoDBTasks
 from furl import furl
 import flask_login
