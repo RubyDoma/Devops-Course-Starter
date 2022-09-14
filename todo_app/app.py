@@ -1,6 +1,6 @@
 from multiprocessing import allow_connection_pickling
 from flask import Flask, request, render_template, redirect, redirect, jsonify
-from flask_login import LoginManager , login_required, UserMixin
+from flask_login import LoginManager, current_user, login_required, UserMixin
 from todo_app.mongodb_items import MongoDBTasks
 from furl import furl
 import flask_login
@@ -54,7 +54,7 @@ def create_app():
 
     login_manager = LoginManager() 
     @login_manager.unauthorized_handler 
-    # Add logic to redirect to the Github OAuth flow when unauthenticated 
+    # Redirect to the Github OAuth flow when unauthenticated 
     def unauthenticated(): 
         
         url = 'https://github.com/login/oauth/authorize'
@@ -76,8 +76,7 @@ def create_app():
 
     @app.route('/login/callback')
     def oauth2_callback():
-        
-       
+        # Login successful
         user_id = User("7860342")
         flask_login.login_user(user_id, remember=False, duration=None, force=False, fresh=True)
 
@@ -89,11 +88,12 @@ def create_app():
             'code': code,
             'state': 'unguessablerandomstring'
         }
-
+        # Obtain a temp access_token
         r = requests.post(access_token_url, json=payload, headers={'Accept': 'application/json'})
         access_token = json.loads(r.text).get('access_token')
-      
         access_user_url = 'https://api.github.com/user'
+
+        # Obtain user's data
         r = requests.get(access_user_url, headers={'Authorization': f'Bearer {access_token}'})
         # return jsonify({
         #     'status': 'success',
@@ -121,6 +121,7 @@ def create_app():
             
     @app.route('/add/add_item', methods=['POST'])
     @login_required
+    #@roles_required(['writer'])
     def add_to_do():
         mongodbtasks.add_task(title=request.form.get('item_name'))
         return oauth2_callback()
@@ -154,7 +155,9 @@ def create_app():
         return oauth2_callback()
         
 
+    app.config['LOGIN_DISABLED'] = os.getenv('LOGIN_DISABLED') == 'True'
     return app
+
 
 if __name__ == "__main__":
     create_app.run(debug=True)
