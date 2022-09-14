@@ -1,6 +1,6 @@
 from multiprocessing import allow_connection_pickling
 from flask import Flask, request, render_template, redirect, url_for, redirect, jsonify
-from flask_login import LoginManager , login_required, UserMixin
+from flask_login import LoginManager , login_required, current_user, UserMixin
 from todo_app.mongodb_items import MongoDBTasks
 from furl import furl
 import flask_login
@@ -113,15 +113,10 @@ def create_app():
 
     @app.route('/')
     @login_required
-    def homelogin():
-        user = User(UserMixin)
-        if not user.is_authenticated:
-            unauthenticated()
-        else:
-            def index():
-                items = mongodbtasks.get_all_tasks()
-                item_view_model = ViewModel(items)
-                return render_template('index.html',view_model=item_view_model)
+    def index():
+        items = mongodbtasks.get_all_tasks()
+        item_view_model = ViewModel(items)
+        return render_template('index.html',view_model=item_view_model)
             
             
     @app.route('/add/add_item', methods=['POST'])
