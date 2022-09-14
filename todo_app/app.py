@@ -1,5 +1,5 @@
 from multiprocessing import allow_connection_pickling
-from flask import Flask, request, render_template, redirect, redirect, jsonify
+from flask import Flask, flash, request, render_template, redirect, redirect, url_for, jsonify
 from flask_login import LoginManager, current_user, login_required, UserMixin
 from todo_app.mongodb_items import MongoDBTasks
 from furl import furl
@@ -7,6 +7,7 @@ import flask_login
 import requests
 import json
 import os
+from sqlalchemy import Column, String
 
 
 class ViewModel:
@@ -111,6 +112,11 @@ def create_app():
     login_manager.init_app(app) 
 
 
+    user_id = User("7860342")
+    current_user = user_id
+    current_user.role = "reader"
+
+
     @app.route('/')
     @login_required
     def index():
@@ -119,12 +125,17 @@ def create_app():
         return render_template('index.html',view_model=item_view_model)
             
             
-    @app.route('/add/add_item', methods=['POST'])
+    @app.route('/add/add_item', methods=['GET', 'POST'])
     @login_required
-    #@roles_required(['writer'])
     def add_to_do():
-        mongodbtasks.add_task(title=request.form.get('item_name'))
-        return oauth2_callback()
+        if current_user.role == "writer":
+            mongodbtasks.add_task(title=request.form.get('item_name'))
+            return oauth2_callback()
+        elif current_user.role == "reader":
+            flash('You need writer role to perform this action')
+            return redirect(url_for('index'))
+        
+    
         
 
     @app.route('/remove/<id>', methods=['POST'])
