@@ -73,7 +73,6 @@ def create_app():
         def __init__(self, id):
             self.id = id
 
-    
 
     @app.route('/login/callback')
     def oauth2_callback():
@@ -88,7 +87,6 @@ def create_app():
             'client_id': client_id,
             'client_secret': client_secret,
             'code': code,
-            #'redirect_uri':
             'state': 'unguessablerandomstring'
         }
 
@@ -108,50 +106,58 @@ def create_app():
         
     @login_manager.user_loader 
     def load_user(user_id): 
-        return User.get(user_id)
+        return User(user_id)
+
     login_manager.init_app(app) 
 
 
     @app.route('/')
     @login_required
-    def index():
-        items = mongodbtasks.get_all_tasks()
-        item_view_model = ViewModel(items)
-        return render_template('index.html',view_model=item_view_model)
-        
+    def homelogin():
+        user = User(UserMixin)
+        if not user.is_authenticated:
+            unauthenticated()
+        else:
+            def index():
+                items = mongodbtasks.get_all_tasks()
+                item_view_model = ViewModel(items)
+                return render_template('index.html',view_model=item_view_model)
+            
             
     @app.route('/add/add_item', methods=['POST'])
     @login_required
     def add_to_do():
         mongodbtasks.add_task(title=request.form.get('item_name'))
-        return redirect(url_for('index'))
+        return oauth2_callback()
         
 
     @app.route('/remove/<id>', methods=['POST'])
     @login_required
     def delete_task(id):
         mongodbtasks.delete_task(id=request.form['remove_id'])
-        return redirect(url_for('index'))
+        return oauth2_callback()
 
 
     @app.route('/mark_complete/<id>', methods=['POST'])
     @login_required
     def mark_complete(id):
         mongodbtasks.mark_as_completed(id=request.form['complete_id'])
-        return redirect(url_for('index'))
+        return oauth2_callback()
 
     @app.route('/mark_doing/<_id>', methods=['POST'])
     @login_required
     def mark_doing(_id):
         mongodbtasks.mark_as_doing(id=request.form['doing_id'])
-        return redirect(url_for('index'))
+        return oauth2_callback()
+     
 
 
     @app.route('/mark_to_do/<id>', methods=['POST'])
     @login_required
     def mark_incomplete(id):
         mongodbtasks.mark_as_to_do(id=request.form['incomplete_id'])
-        return redirect(url_for('index'))
+        return oauth2_callback()
+        
 
     return app
 
