@@ -1,13 +1,12 @@
 from multiprocessing import allow_connection_pickling
 from flask import Flask, request, render_template, redirect, url_for, redirect, jsonify
-from todo_app.mongodb_items import MongoDBTasks
 from flask_login import LoginManager , login_required, UserMixin
+from todo_app.mongodb_items import MongoDBTasks
 from furl import furl
-import os
-import json
+import flask_login
 import requests
-
-
+import json
+import os
 
 
 class ViewModel:
@@ -43,15 +42,12 @@ class ViewModel:
                     done_output.append(item)
             return done_output
 
-class User: 
-
-    def __init__(self, id):
-        self.id = id
 
 def create_app():
     
     app = Flask(__name__)
     mongodbtasks = MongoDBTasks()
+    app.config.update(SECRET_KEY=os.urandom(24))
 
     client_id = os.environ.get('CLIENT_ID')
     client_secret= os.environ.get('CLIENT_SECRET')
@@ -66,43 +62,53 @@ def create_app():
         'client_id': client_id,
         'redirect_uri': 'http://127.0.0.1:5000/login/callback',
         #'scope': 'read:user',
-        #'state': 'An unguessable random string',
+        'state': 'unguessablerandomstring',
        
         }
         url = furl(url).set(params)
         return redirect(str(url), 302)
-        
 
-    @app.route('/oauth2/<service>/callback')
-    def oauth2_callback(service):
-        print(service)
+    class User(UserMixin): 
+
+        def __init__(self, id):
+            self.id = id
+
+    
+
+    @app.route('/login/callback')
+    def oauth2_callback():
+        
+       
+        user_id = User("7860342")
+        flask_login.login_user(user_id, remember=False, duration=None, force=False, fresh=True)
 
         code = request.args.get('code')
-        # access token
         access_token_url = 'https://github.com/login/oauth/access_token'
         payload = {
             'client_id': client_id,
             'client_secret': client_secret,
             'code': code,
-            'redirect_uri': 'http://127.0.0.1:5000/login/callback',
-            #'state': 'An unguessable random string'
+            #'redirect_uri':
+            'state': 'unguessablerandomstring'
         }
+
         r = requests.post(access_token_url, json=payload, headers={'Accept': 'application/json'})
         access_token = json.loads(r.text).get('access_token')
-        print(access_token)
-        # access token
+      
         access_user_url = 'https://api.github.com/user'
-        r = requests.get(access_user_url, headers={'Authorization': 'token ' + access_token})
-        return jsonify({
-            'status': 'success',
-            'data': json.loads(r.text)
-        })
-
-    
+        r = requests.get(access_user_url, headers={'Authorization': f'Bearer {access_token}'})
+        # return jsonify({
+        #     'status': 'success',
+        #     'data': json.loads(r.text)
+        # })
+        items = mongodbtasks.get_all_tasks()
+        item_view_model = ViewModel(items)
+        return render_template('index.html',view_model=item_view_model)
+       
         
     @login_manager.user_loader 
     def load_user(user_id): 
-        return None 
+        return User.get(user_id)
     login_manager.init_app(app) 
 
 
