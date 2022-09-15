@@ -1,13 +1,16 @@
+from csv import reader, writer
 from multiprocessing import allow_connection_pickling
 from flask import Flask, flash, request, render_template, redirect, redirect, url_for, jsonify
 from flask_login import LoginManager, current_user, login_required, UserMixin
 from todo_app.mongodb_items import MongoDBTasks
+from functools import wraps
 from furl import furl
 import flask_login
 import requests
 import json
 import os
-from sqlalchemy import Column, String
+
+
 
 
 class ViewModel:
@@ -73,7 +76,12 @@ def create_app():
 
         def __init__(self, id):
             self.id = id
+        def user_roles(self, writer, reader):
+            self.writer = writer
+            self.reader = reader
 
+       
+    
 
     @app.route('/login/callback')
     def oauth2_callback():
@@ -103,6 +111,8 @@ def create_app():
         items = mongodbtasks.get_all_tasks()
         item_view_model = ViewModel(items)
         return render_template('index.html',view_model=item_view_model)
+        
+        
        
         
     @login_manager.user_loader 
@@ -112,13 +122,26 @@ def create_app():
     login_manager.init_app(app) 
 
 
-    user_id = User("7860342")
-    current_user = user_id
-    current_user.role = "reader"
+    def roles_accepted(*role_names):
+    
+        def wrapper(view_function):
 
+            @wraps(view_function)
+            def decorator(*args, **kwargs):
+                current_user = User(UserMixin)
+                current_user = "Reader"
+                if current_user != "Writer":
+                    return oauth2_callback()
+                    #doesn't renderer the page properly
+                return view_function(*args, **kwargs)
+            return decorator
+        return wrapper
+
+      
 
     @app.route('/')
     @login_required
+    @roles_accepted('Writer', 'Reader')
     def index():
         items = mongodbtasks.get_all_tasks()
         item_view_model = ViewModel(items)
@@ -127,19 +150,15 @@ def create_app():
             
     @app.route('/add/add_item', methods=['GET', 'POST'])
     @login_required
+    @roles_accepted('Writer')
     def add_to_do():
-        if current_user.role == "writer":
-            mongodbtasks.add_task(title=request.form.get('item_name'))
-            return oauth2_callback()
-        elif current_user.role == "reader":
-            flash('You need writer role to perform this action')
-            return redirect(url_for('index'))
-        
-    
-        
+        mongodbtasks.add_task(title=request.form.get('item_name'))
+        return oauth2_callback()
+       
 
     @app.route('/remove/<id>', methods=['POST'])
     @login_required
+    @roles_accepted('Writer')
     def delete_task(id):
         mongodbtasks.delete_task(id=request.form['remove_id'])
         return oauth2_callback()
@@ -147,20 +166,23 @@ def create_app():
 
     @app.route('/mark_complete/<id>', methods=['POST'])
     @login_required
+    @roles_accepted('Writer')
     def mark_complete(id):
         mongodbtasks.mark_as_completed(id=request.form['complete_id'])
         return oauth2_callback()
 
-    @app.route('/mark_doing/<_id>', methods=['POST'])
-    @login_required
-    def mark_doing(_id):
+
+    @app.route('/mark_doing/<id>', methods=['POST'])
+    @login_required 
+    @roles_accepted('Writer')
+    def mark_doing(id):
         mongodbtasks.mark_as_doing(id=request.form['doing_id'])
         return oauth2_callback()
-     
 
 
     @app.route('/mark_to_do/<id>', methods=['POST'])
     @login_required
+    @roles_accepted('Writer')
     def mark_incomplete(id):
         mongodbtasks.mark_as_to_do(id=request.form['incomplete_id'])
         return oauth2_callback()

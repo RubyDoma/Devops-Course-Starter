@@ -153,6 +153,18 @@ blinker = "*"
 Flask = "*"
 
 [[package]]
+name = "flask-principal"
+version = "0.4.0"
+description = "Identity management for flask"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+blinker = "*"
+Flask = "*"
+
+[[package]]
 name = "flask-sqlalchemy"
 version = "2.5.1"
 description = "Adds SQLAlchemy support to your Flask application."
@@ -598,7 +610,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "7a21a8533a4533bd71443dcb76a75cabff61fce666621f1cd57b4b9b9437f693"
+content-hash = "d82fb0d8e0c619f9b817be338b1d128f34e0572506becffd56b7fd5a915bfe81"
 
 [metadata.files]
 atomicwrites = [
@@ -635,6 +647,7 @@ flask = [
 ]
 flask-login = []
 flask-mail = []
+flask-principal = []
 flask-sqlalchemy = []
 flask-user = []
 flask-wtf = []

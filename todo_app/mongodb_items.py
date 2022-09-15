@@ -76,5 +76,3 @@ class MongoDBTasks:
             }
         }
         self.tasks_in_cosmosaccount.update_one(id_filter, update_task_values)
-
-
