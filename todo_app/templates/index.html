@@ -25,9 +25,11 @@
             <h5>
               
               {{item.title}}
+
+          
               
-            
-              
+             
+       
               <form class="float-end" method="POST" action="/remove/{{item.id}}">
               <input type="submit" name="remove" class="btn-secondary" value="🗑️">
               <input type="hidden" name="remove_id" value="{{item.id}}">
@@ -40,13 +42,13 @@
               <input type="submit" name="complete" class="btn-secondary" value="✔️" data-source="{{item.id}}">
               <input type="hidden" name="complete_id" value="{{item.id}}">
             </form>
+
     
-           
-            
-         
           
+             
+            
           </li>
-       
+        
             {% endfor %}  
             </ul>
 
