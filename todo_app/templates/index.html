@@ -26,9 +26,9 @@
               
               {{item.title}}
 
-          
-              
-             
+              {% if "Writer" in current_user.roles %}
+
+
        
               <form class="float-end" method="POST" action="/remove/{{item.id}}">
               <input type="submit" name="remove" class="btn-secondary" value="🗑️">
@@ -45,6 +45,8 @@
 
     
           
+            {% else %}
+            {% endif %}
              
             
           </li>
@@ -58,6 +60,7 @@
               <li class="list-group-item">
                 <h5>
                   {{item.title}}
+                  {% if "Writer" in current_user.roles %}
                   
                   <form class="float-end" method="POST" action="/remove/{{item.id}}">
                   <input type="submit" name="remove" class="btn-secondary" value="🗑️">
@@ -71,6 +74,10 @@
                   <input type="submit" name="complete" class="btn-secondary" value="✔️" data-source="{{item.id}}">
                   <input type="hidden" name="complete_id" value="{{item.id}}">
                 </form>
+
+                {% else %}
+            {% endif %}
+             
               </li>
               {% endfor %}  
             </ul>
@@ -84,6 +91,7 @@
               {% if loop.index <= 5 %}
 
               {{item.title}}
+              {% if "Writer" in current_user.roles %}
               <form class="float-end" method="POST" action="/remove/{{item.id}}">
                 <input type="submit" name="remove" class="btn-secondary" value="🗑️">
                 <input type="hidden" name="remove_id" value="{{item.id}}">
@@ -97,7 +105,9 @@
                 <input type="hidden" name="incomplete_id" value="{{item.id}}">
               </form>
             
-            
+              {% else %}
+              {% endif %}
+               
             </li>
           
               {% endif %}  
@@ -115,6 +125,7 @@
 
           <li class="list-group-item">
          <h5> {{item.title}}
+          {% if "Writer" in current_user.roles %}
          
           <form class="float-end" method="POST" action="/remove/{{item.id}}">
           <input type="submit" name="remove" class="btn-secondary" value="🗑️">
@@ -128,6 +139,9 @@
           <input type="submit" name="to_do" class="btn-secondary" value="To do" data-source="{{item.id}}">
           <input type="hidden" name="incomplete_id" value="{{item.id}}">
           </form>
+          {% else %}
+            {% endif %}
+             
         </li>
         {% endif %}  
         {% endfor %}  

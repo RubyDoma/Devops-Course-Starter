@@ -2,12 +2,11 @@ from csv import unregister_dialect
 from msilib import MSIMODIFY_VALIDATE
 from multiprocessing import allow_connection_pickling
 from unittest.util import unorderable_list_difference
-from flask import Flask, request, render_template, redirect, redirect, url_for, jsonify
-from flask_login import LoginManager, login_required, UserMixin, current_user, login_user
+from flask import Flask, request, render_template, redirect, redirect, jsonify
+from flask_login import LoginManager, login_required, UserMixin, AnonymousUserMixin, current_user, login_user
 from todo_app.mongodb_items import MongoDBTasks
 from functools import wraps
 from furl import furl
-import flask_login
 import requests
 import json
 import os
@@ -52,9 +51,15 @@ class User(UserMixin):
 
     def __init__(self, id):
         self.id = id
-        self.role = "Writer" if id == "7860342" else "Reader"
+        self.role = "Reader" if id == "78603420" else "Writer"
+        self.roles = ["Reader", "Writer"]
+
+class AnonymousUser(AnonymousUserMixin):
     
-    
+    def __init__(self):
+        self.roles = ["Reader"]
+
+
 def create_app():
     
     app = Flask(__name__)
@@ -65,6 +70,8 @@ def create_app():
     client_secret= os.environ.get('CLIENT_SECRET')
 
     login_manager = LoginManager() 
+    login_manager.anonymous_user = AnonymousUser
+
     @login_manager.unauthorized_handler 
     # Redirect to the Github OAuth flow when unauthenticated 
     def unauthenticated(): 
@@ -83,8 +90,6 @@ def create_app():
     @app.route('/login/callback')
     def oauth2_callback():
         # Login successful
-
-        
 
         code = request.args.get('code')
         access_token_url = 'https://github.com/login/oauth/access_token'
@@ -105,16 +110,20 @@ def create_app():
         #     'status': 'success',
         #     'data': json.loads(r.text)
         # })
-        #7860342
-        user_id = json.loads(r.text)['id']
-        print(user_id)
 
-        login_user(user_id, remember=False, duration=None, force=False, fresh=True)
+
+        user_id = json.loads(r.text).get("id")
+        user = User(user_id)
+
+        login_user(user)
+
+
+        
         items = mongodbtasks.get_all_tasks()
         item_view_model = ViewModel(items)
         return render_template('index.html',view_model=item_view_model)
-        
-        
+    
+    
 
     @login_manager.user_loader
     def load_user(user_id):
@@ -122,6 +131,7 @@ def create_app():
 
     
     login_manager.init_app(app) 
+
 
  
     def roles_accepted(*roles):
@@ -140,11 +150,11 @@ def create_app():
     
     @app.route('/')
     @login_required
-    #@roles_accepted('Writer', 'Reader')
+    @roles_accepted('Writer', 'Reader')
     def index():
         items = mongodbtasks.get_all_tasks()
         item_view_model = ViewModel(items)
-        return render_template('index.html',view_model=item_view_model)
+        return render_template('index.html',view_model=item_view_model, current_user = current_user)
         
             
     @app.route('/add/add_item', methods=['GET', 'POST'])
