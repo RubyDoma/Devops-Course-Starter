@@ -31,7 +31,7 @@ jobs:
       run: echo ${{secrets.DOCKERHUBTOKEN}} | docker login --username rubydoma --password-stdin
       
     - name: Push Image to Docker Hub
-      run: docker push rubydoma/todo-app-exercise-8
+      run: docker push rubydoma/todo-app-exercise-8est
 
   Azure:
     name: Update App on Azure

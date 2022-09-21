@@ -104,4 +104,13 @@ $ docker-compose up webapp-test
 http://ruby-webapp.azurewebsites.net/
 
 
+AUTHORIZATION:
+
+Users who are not logged in will have the "Reader" role. 
+This will mean they will not be able to add or edit to-dos.
+
+Logged in users can be set as "Writer" (hard coded).
+This will mean they can add or edit to-dos.
+
+
 
