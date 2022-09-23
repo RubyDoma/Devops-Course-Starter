@@ -58,7 +58,7 @@ Please follow these steps in order to run the project:
 - Declare your Key and Token in the .env file
 
 
-TESTING
+## TESTING
 
 There are 2 files containinig unit and integration tests:
 
@@ -101,10 +101,10 @@ $ docker-compose up webapp-test
 
 ## LINK TO AZURE WEBAPP
 
-http://ruby-webapp.azurewebsites.net/
+https://ruby-webapp.azurewebsites.net
 
 
-AUTHORIZATION:
+## AUTHORIZATION:
 
 Users who are not logged in will have the "Reader" role. 
 This will mean they will not be able to add or edit to-dos.
