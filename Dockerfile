@@ -2,7 +2,7 @@ FROM python:3.10.3-slim-buster as base
 RUN apt-get update
 COPY . /opt/
 WORKDIR /opt
-RUN pip install poetry
+RUN pip3 install poetry
 RUN poetry config virtualenvs.create false --local && poetry install
 
 FROM base as development
