@@ -119,3 +119,11 @@ env/
 ### Configuration files ###
 .env
 .env.dev
+
+# Local .terraform directories
+.terraform
+
+# Terraform files
+terraform.lock.hcl
+terraform.tfstate
+terraform.tfstate.lock.info
