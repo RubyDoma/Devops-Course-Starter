@@ -21,7 +21,7 @@ jobs:
     needs: build
     if: github.ref_name == 'exercise-11'
     steps:
-    - run: echo "Publishing!"
+    - run: echo "Publishing!!" 
     - uses: actions/checkout@v2
 
     - name: Docker Build
