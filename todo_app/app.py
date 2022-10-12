@@ -1,5 +1,5 @@
-from flask import Flask, request, render_template, redirect, redirect, jsonify
-from flask_login import LoginManager, login_required, UserMixin, AnonymousUserMixin, current_user, login_user
+from flask import Flask, request, render_template, redirect, redirect, jsonify, url_for
+from flask_login import LoginManager, login_required, UserMixin, AnonymousUserMixin, current_user, login_user 
 from todo_app.mongodb_items import MongoDBTasks
 from functools import wraps
 from furl import furl
@@ -47,23 +47,24 @@ class User(UserMixin):
 
     def __init__(self, id):
         self.id = id
-        self.role = "Reader" if id == "78603420" else "Writer"
+        self.role = "Writer" if id == "78603420" else "Reader"
         self.roles = ["Reader", "Writer"]
 
 class AnonymousUser(AnonymousUserMixin):
     
     def __init__(self):
-        self.roles = ["Reader"]
+        self.role = "Reader"
 
 
 def create_app():
     
     app = Flask(__name__)
     mongodbtasks = MongoDBTasks()
-    app.config.update(SECRET_KEY=os.urandom(24))
+    app.config.update(SECRET_KEY=os.environ.get('SECRET_KEY'))
 
     client_id = os.environ.get('CLIENT_ID')
     client_secret= os.environ.get('CLIENT_SECRET')
+    redirect_uri= os.environ.get('REDIRECT_URI')
 
     login_manager = LoginManager() 
     login_manager.anonymous_user = AnonymousUser
@@ -75,7 +76,7 @@ def create_app():
         url = 'https://github.com/login/oauth/authorize'
         params = {
         'client_id': client_id,
-        'redirect_uri': 'http://127.0.0.1:5000/login/callback',
+        'redirect_uri': redirect_uri,
         'state': 'unguessablerandomstring',
        
         }
@@ -115,9 +116,8 @@ def create_app():
 
 
         
-        items = mongodbtasks.get_all_tasks()
-        item_view_model = ViewModel(items)
-        return render_template('index.html',view_model=item_view_model)
+
+        return redirect(url_for('index'))
     
     
 
@@ -135,10 +135,9 @@ def create_app():
             @wraps(fn)
             def decorated_view(*args, **kwargs):
                 for role in roles:
-                    if role != "Writer":
-                        return oauth2_callback()
-                        #it works but doesn't render the page properly
-                return fn(*args, **kwargs)
+                    if role == current_user.role:
+                        return fn(*args, **kwargs)
+                return "you don't have permission"
             return decorated_view
         return wrapper
     
@@ -158,7 +157,7 @@ def create_app():
     @roles_accepted('Writer')
     def add_to_do():
         mongodbtasks.add_task(title=request.form.get('item_name'))
-        return oauth2_callback()
+        return redirect(url_for('index'))
 
 
     @app.route('/remove/<id>', methods=['POST'])
@@ -166,7 +165,7 @@ def create_app():
     @roles_accepted('Writer')
     def delete_task(id):
         mongodbtasks.delete_task(id=request.form['remove_id'])
-        return oauth2_callback()
+        return redirect(url_for('index'))
 
 
     @app.route('/mark_complete/<id>', methods=['POST'])
@@ -174,7 +173,7 @@ def create_app():
     @roles_accepted('Writer')
     def mark_complete(id):
         mongodbtasks.mark_as_completed(id=request.form['complete_id'])
-        return oauth2_callback()
+        return redirect(url_for('index'))
 
 
     @app.route('/mark_doing/<id>', methods=['POST'])
@@ -182,7 +181,7 @@ def create_app():
     @roles_accepted('Writer')
     def mark_doing(id):
         mongodbtasks.mark_as_doing(id=request.form['doing_id'])
-        return oauth2_callback()
+        return redirect(url_for('index'))
 
 
     @app.route('/mark_to_do/<id>', methods=['POST'])
@@ -190,7 +189,7 @@ def create_app():
     @roles_accepted('Writer')
     def mark_incomplete(id):
         mongodbtasks.mark_as_to_do(id=request.form['incomplete_id'])
-        return oauth2_callback()
+        return redirect(url_for('index'))
         
 
     app.config['LOGIN_DISABLED'] = os.getenv('LOGIN_DISABLED') == 'True'
