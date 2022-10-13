@@ -9,10 +9,6 @@ from todo_app.mongodb_items import MongoDBTasks
 
 
 
-file_path = find_dotenv(".env.test")
-load_dotenv(file_path, override=True)
-
-
 @pytest.fixture
 def client():
     file_path = find_dotenv('.env.test')
