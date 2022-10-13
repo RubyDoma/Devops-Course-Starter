@@ -119,3 +119,5 @@ env/
 ### Configuration files ###
 .env
 .env.dev
+
+.terraform
