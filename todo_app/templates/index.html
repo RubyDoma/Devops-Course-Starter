@@ -26,7 +26,7 @@
               
               {{item.title}}
 
-              {% if "Writer" in current_user.roles %}
+              {% if current_user.role == "Writer" %}
 
 
        
@@ -91,7 +91,7 @@
               {% if loop.index <= 5 %}
 
               {{item.title}}
-              {% if "Writer" in current_user.roles %}
+              {% if current_user.role == "Writer" %}
               <form class="float-end" method="POST" action="/remove/{{item.id}}">
                 <input type="submit" name="remove" class="btn-secondary" value="🗑️">
                 <input type="hidden" name="remove_id" value="{{item.id}}">
@@ -125,7 +125,7 @@
 
           <li class="list-group-item">
          <h5> {{item.title}}
-          {% if "Writer" in current_user.roles %}
+          {% if current_user.role == "Writer" %}
          
           <form class="float-end" method="POST" action="/remove/{{item.id}}">
           <input type="submit" name="remove" class="btn-secondary" value="🗑️">
