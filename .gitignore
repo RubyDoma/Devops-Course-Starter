@@ -127,5 +127,6 @@ env/
 terraform.lock.hcl
 terraform.tfstate
 terraform.tfstate.lock.info
-.tfvars
+*.tfvars
+
 
