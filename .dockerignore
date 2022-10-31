@@ -11,3 +11,11 @@ poetry.lock
 todoapp.service
 Dockerfile
 README.md
+
+# Local .terraform directories
+.terraform
+
+# Terraform files
+terraform.lock.hcl
+terraform.tfstate
+terraform.tfstate.lock.info
