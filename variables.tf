@@ -11,3 +11,7 @@ variable "clientid" {
 variable "clientsecret" {
   sensitive = true
 }
+
+variable "loggly_token" {
+  sensitive = true
+}

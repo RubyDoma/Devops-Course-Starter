@@ -7,7 +7,11 @@ import requests
 import json
 import os
 
+from loggly.handlers import HTTPSHandler
+from logging import Formatter
 
+
+import logging
 
 
 class ViewModel:
@@ -61,6 +65,8 @@ def create_app():
     app = Flask(__name__)
     mongodbtasks = MongoDBTasks()
     app.config.update(SECRET_KEY=os.environ.get('SECRET_KEY'))
+    app.logger.setLevel(os.environ.get('LOG_LEVEL'))
+   
 
     client_id = os.environ.get('CLIENT_ID')
     client_secret= os.environ.get('CLIENT_SECRET')
@@ -68,6 +74,13 @@ def create_app():
 
     login_manager = LoginManager() 
     login_manager.anonymous_user = AnonymousUser
+
+    if os.environ.get('LOGGLY_TOKEN') is not None:
+        handler = HTTPSHandler(f'https://logs-01.loggly.com/inputs/{os.environ.get("LOGGLY_TOKEN")}/tag/todo-app')
+        print(os.environ.get('LOGGLY_TOKEN'))
+        handler.setFormatter(Formatter("[%(asctime)s] %(levelname)s in %(module)s: %(message)s")
+        )
+        app.logger.addHandler(handler)
 
     @login_manager.unauthorized_handler 
     # Redirect to the Github OAuth flow when unauthenticated 
@@ -87,7 +100,7 @@ def create_app():
     @app.route('/login/callback')
     def oauth2_callback():
         # Login successful
-
+    
         code = request.args.get('code')
         access_token_url = 'https://github.com/login/oauth/access_token'
         payload = {
@@ -98,6 +111,8 @@ def create_app():
         }
         # Obtain a temp access_token
         r = requests.post(access_token_url, json=payload, headers={'Accept': 'application/json'})
+        if r.status_code != 200:
+            app.logger.info(f'issue when obtaining access token')
         access_token = json.loads(r.text).get('access_token')
         access_user_url = 'https://api.github.com/user'
 
@@ -113,8 +128,7 @@ def create_app():
         user = User(user_id)
 
         login_user(user)
-
-
+        app.logger.info(f'user with id {user_id} logged in successfully')
         
 
         return redirect(url_for('index'))
@@ -156,7 +170,9 @@ def create_app():
     @login_required
     @roles_accepted('Writer')
     def add_to_do():
+        name = request.form.get('item_name')
         mongodbtasks.add_task(title=request.form.get('item_name'))
+        app.logger.info(f'item with name: {name} has been added')
         return redirect(url_for('index'))
 
 
@@ -164,7 +180,9 @@ def create_app():
     @login_required
     @roles_accepted('Writer')
     def delete_task(id):
+        id = request.form['remove_id']
         mongodbtasks.delete_task(id=request.form['remove_id'])
+        app.logger.info(f'item with id: {id} has been removed')
         return redirect(url_for('index'))
 
 
@@ -172,7 +190,9 @@ def create_app():
     @login_required
     @roles_accepted('Writer')
     def mark_complete(id):
+        id = request.form['complete_id']
         mongodbtasks.mark_as_completed(id=request.form['complete_id'])
+        app.logger.info(f'item with id: {id} has been marked as completed')
         return redirect(url_for('index'))
 
 
@@ -180,7 +200,9 @@ def create_app():
     @login_required 
     @roles_accepted('Writer')
     def mark_doing(id):
+        id = request.form['doing_id']
         mongodbtasks.mark_as_doing(id=request.form['doing_id'])
+        app.logger.info(f'item with id: {id} has been moved to "doing')
         return redirect(url_for('index'))
 
 
@@ -188,7 +210,9 @@ def create_app():
     @login_required
     @roles_accepted('Writer')
     def mark_incomplete(id):
+        id = request.form['incomplete_id']
         mongodbtasks.mark_as_to_do(id=request.form['incomplete_id'])
+        app.logger.info(f'item with id: {id} has been moved to "to do')
         return redirect(url_for('index'))
         
 
