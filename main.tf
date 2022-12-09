@@ -104,7 +104,7 @@ resource "azurerm_linux_web_app" "main" {
     "CLIENT_ID"                           = var.clientid
     "CLIENT_SECRET"                       = var.clientsecret
     "FLAS_APP"                            = "todo_app/app"
-    "FLASK_ENV"                           = "development"
+    "FLASK_ENV"                           = "production"
     "SECRET_KEY"                          = "notused"
     "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = "false"
     "DOCKER_REGISTRY_SERVER_URL"          = "https://rubydoma"
