@@ -108,7 +108,8 @@ resource "azurerm_linux_web_app" "main" {
     "SECRET_KEY"                          = "notused"
     "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = "false"
     "DOCKER_REGISTRY_SERVER_URL"          = "https://rubydoma"
-
+    "LOG_LEVEL"                           = "DEBUG"
+    "LOGGLY_TOKEN"                        = var.loggly_token
   }
 
 }
